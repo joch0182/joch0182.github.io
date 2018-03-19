@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.1.0 -->
+<title>React Native - Nuclide</title>
+<meta property="og:title" content="React Native" />
+<meta name="description" content="Nuclide has built-in support for the React Native framework. React Native provides a set of components and extensions that allows you to easily write native iOS and Android applications using the Flow and JavaScript programming languages and the React UI library." />
+<meta property="og:description" content="Nuclide has built-in support for the React Native framework. React Native provides a set of components and extensions that allows you to easily write native iOS and Android applications using the Flow and JavaScript programming languages and the React UI library." />
+<link rel="canonical" href="http://localhost:4000/docs/platforms/react-native/" />
+<meta property="og:url" content="http://localhost:4000/docs/platforms/react-native/" />
+<meta property="og:site_name" content="Nuclide" />
+<meta property="og:image" content="http://localhost:4000/static/og_image.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-18T17:06:10-07:00" />
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "BlogPosting",
+"headline": "React Native",
+"image": "http://localhost:4000/static/og_image.png",
+"datePublished": "2018-03-18T17:06:10-07:00",
+"description": "Nuclide has built-in support for the React Native framework. React Native provides a set of components and extensions that allows you to easily write native iOS and Android applications using the Flow and JavaScript programming languages and the React UI library.",
+"publisher": {"@type": "Organization",
+"logo": {"@type": "ImageObject",
+"url": "http://localhost:4000/static/og_image.png"}},
+"url": "http://localhost:4000/docs/platforms/react-native/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+
+  
+  <link rel="stylesheet" href="/static/fonts/332720/BC699FA675F9356E3.css" media="screen">
+  <link rel="stylesheet" href="/css/main.css" media="screen">
+  <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+
+  
+  <script src="https://unpkg.com/react@0.13.1/dist/react-with-addons.min.js"></script>
+
+  
+
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Nuclide" />
+</head>
+
+  <body>
+    <div id="headerBar" class="headerBarContainer  visible">
+  <header>
+    <a href="http://localhost:4000/">
+      <img src="/static/logo_nav.png" height="30" width="25" alt="">
+      <h2>Nuclide</h2>
+    </a>
+    <div class="navigationWrapper navigationFull" id="flat_nav">
+      <nav class="navigation">
+        <ul>
+          
+            <li class="navItem navItemActive">
+              
+                <a href="/docs/">Docs</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/blog/">Blog</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/support/">Support</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="https://github.com/facebook/nuclide">GitHub</a>
+              
+            </li>
+          
+          <li class="algolia-search-wrapper">
+            <input id="algolia-doc-search" type="search" placeholder="Search docs..." />
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navigationWrapper navigationSlider" id="navigation_wrap"></div>
+  </header>
+  <script>
+    var event = document.createEvent('Event');
+    event.initEvent('slide', true, true);
+    document.addEventListener('slide', function (e) {
+      document.body.classList.toggle('sliderActive');
+    }, false);
+    var navData = [
+      
+      {
+        href       : "/docs/",
+        text       : "Docs",
+      },
+      
+      {
+        href       : "/blog/",
+        text       : "Blog",
+      },
+      
+      {
+        href       : "/support/",
+        text       : "Support",
+      },
+      
+      {
+        href       : "https://github.com/facebook/nuclide",
+        text       : "GitHub",
+      },
+      
+    ];
+  </script>
+  <script type="text/javascript">
+    var Nav = React.createClass({displayName: "Nav",
+      getInitialState: function() {
+        return {
+          currentPath: document.location.pathname,
+          slideoutActive: false,
+        };
+      },
+      getDefaultProps: function() {
+        return {
+          data: navData,
+        }
+      },
+      handleClick: function(id) {
+        this.setState({
+          slideoutActive: false,
+        });
+      },
+      handleSlide: function(id) {
+        this.setState({
+          slideoutActive: !this.state.slideoutActive,
+        });
+      },
+      render: function() {
+        var classes = React.addons.classSet({
+          'navSlideout': true,
+          'navSlideoutActive': this.state.slideoutActive,
+        });
+        var navClasses = React.addons.classSet({
+          'slidingNav': true,
+          'slidingNavActive': this.state.slideoutActive,
+        });
+        return (
+          React.createElement("div", null,
+            React.createElement("div", {className: classes, onClick: this.handleSlide},
+              React.createElement("i", null, "☰")
+            ),
+            React.createElement("nav", {className: navClasses},
+              React.createElement("ul", null,
+                this.props.data.map(this.renderNavItems)
+              )
+            )
+          )
+        );
+      },
+      renderNavItems: function(child, index) {
+        var classes = React.addons.classSet({
+          'navItem': true,
+          'navItemActive': this.state.currentPath === child.href,
+        });
+        return (
+          React.createElement("li", {key: index, className: classes},
+            React.createElement("a", {onClick: this.handleClick, href: child.href}, child.text)
+          )
+        );
+      },
+    });
+
+    function render(navData) {
+      React.render(
+        React.createElement(Nav, {data: navData}),
+        document.getElementById('navigation_wrap')
+      );
+    }
+    render(navData);
+  </script>
+</div>
+
+    <div class="mainContainer blogContainer postContainer">
+  <div id="main_wrap" class="wrapper mainWrapper">
+    <nav class="toc" id="doc_nav"></nav>
+<script>
+  var docnavData = [
+    
+    {
+      group     : "Quick Start",
+      items     : [
+        
+        
+        {
+          key : "/docs/quick-start/getting-started/",
+          title : "Getting Started",
+          url : "/docs/quick-start/getting-started/",
+        },
+        
+        
+        {
+          key : "/docs/editor/basics/",
+          title : "Basics",
+          url : "/docs/editor/basics/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "About",
+      items     : [
+        
+        
+        {
+          key : "/docs/editor/setup/",
+          title : "Setup",
+          url : "/docs/editor/setup/",
+        },
+        
+        
+        {
+          key : "/docs/editor/keyboard-shortcuts/",
+          title : "Keyboard Shortcuts",
+          url : "/docs/editor/keyboard-shortcuts/",
+        },
+        
+        
+        {
+          key : "/docs/editor/uninstall/",
+          title : "Uninstalling",
+          url : "/docs/editor/uninstall/",
+        },
+        
+        
+        {
+          key : "/docs/help/faq/",
+          title : "FAQ",
+          url : "/docs/help/faq/",
+        },
+        
+        
+        {
+          key : "/docs/help/troubleshooting/",
+          title : "Troubleshooting",
+          url : "/docs/help/troubleshooting/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Feature Guides",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/remote/",
+          title : "Remote Development",
+          url : "/docs/features/remote/",
+        },
+        
+        
+        {
+          key : "/docs/features/debugger/",
+          title : "Debugger",
+          url : "/docs/features/debugger/",
+        },
+        
+        
+        {
+          key : "/docs/features/task-runner/",
+          title : "Task Runner",
+          url : "/docs/features/task-runner/",
+        },
+        
+        
+        {
+          key : "/docs/features/quick-open/",
+          title : "Quick Open",
+          url : "/docs/features/quick-open/",
+        },
+        
+        
+        {
+          key : "/docs/features/working-sets/",
+          title : "Working Sets",
+          url : "/docs/features/working-sets/",
+        },
+        
+        
+        {
+          key : "/docs/features/outline-view/",
+          title : "Outline",
+          url : "/docs/features/outline-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/context-view/",
+          title : "Context View",
+          url : "/docs/features/context-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/health-statistics/",
+          title : "Health Statistics",
+          url : "/docs/features/health-statistics/",
+        },
+        
+        
+        {
+          key : "/docs/features/terminal/",
+          title : "Integrated Terminal",
+          url : "/docs/features/terminal/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Plugins",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/hg/",
+          title : "Mercurial Support",
+          url : "/docs/features/hg/",
+        },
+        
+        
+        {
+          key : "/docs/features/toolbar/",
+          title : "Toolbar",
+          url : "/docs/features/toolbar/",
+        },
+        
+        
+        {
+          key : "/docs/features/buck/",
+          title : "Buck",
+          url : "/docs/features/buck/",
+        },
+        
+        
+        {
+          key : "/docs/features/format-js/",
+          title : "Format JS",
+          url : "/docs/features/format-js/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Languages",
+      items     : [
+        
+        
+        {
+          key : "/docs/languages/hack/",
+          title : "Hack",
+          url : "/docs/languages/hack/",
+        },
+        
+        
+        {
+          key : "/docs/languages/flow/",
+          title : "Flow",
+          url : "/docs/languages/flow/",
+        },
+        
+        
+        {
+          key : "/docs/languages/objective-c/",
+          title : "Objective-C",
+          url : "/docs/languages/objective-c/",
+        },
+        
+        
+        {
+          key : "/docs/languages/cpp/",
+          title : "C++",
+          url : "/docs/languages/cpp/",
+        },
+        
+        
+        {
+          key : "/docs/languages/python/",
+          title : "Python",
+          url : "/docs/languages/python/",
+        },
+        
+        
+        {
+          key : "/docs/languages/swift/",
+          title : "Swift",
+          url : "/docs/languages/swift/",
+        },
+        
+        
+        {
+          key : "/docs/languages/graphql/",
+          title : "GraphQL",
+          url : "/docs/languages/graphql/",
+        },
+        
+        
+        {
+          key : "/docs/languages/other/",
+          title : "PHP, JS, OCaml",
+          url : "/docs/languages/other/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Platforms",
+      items     : [
+        
+        
+        {
+          key : "/docs/platforms/ios/",
+          title : "iOS",
+          url : "/docs/platforms/ios/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/android/",
+          title : "Android",
+          url : "/docs/platforms/android/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/react-native/",
+          title : "React Native",
+          url : "/docs/platforms/react-native/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/web/",
+          title : "Web Development",
+          url : "/docs/platforms/web/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Advanced Topics",
+      items     : [
+        
+        
+        {
+          key : "/docs/advanced-topics/building-from-source/",
+          title : "Building Nuclide From Source",
+          url : "/docs/advanced-topics/building-from-source/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/custom-keybindings/",
+          title : "Custom Keybindings",
+          url : "/docs/advanced-topics/custom-keybindings/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/linter-package-compatibility/",
+          title : "Linter Package Compatibility",
+          url : "/docs/advanced-topics/linter-package-compatibility/",
+        }
+        
+      ],
+    },
+    
+  ];
+</script>
+<script type="text/javascript">
+  var DocNav = React.createClass({displayName: "DocNav",
+    getInitialState: function() {
+      return {
+        toggleActive: false,
+      };
+    },
+    getDefaultProps: function() {
+      return {
+        currentDoc: "React Native",
+        currentGroup: "",
+        data: docnavData,
+      }
+    },
+    handleSlide: function(id) {
+      this.setState({
+        toggleActive: !this.state.toggleActive,
+      });
+    },
+    render: function() {
+      var classes = React.addons.classSet({
+        'navToggle': true,
+        'navToggleActive': this.state.toggleActive,
+      });
+      var navClasses = React.addons.classSet({
+        'toggleNav': true,
+        'toggleNavActive': this.state.toggleActive,
+      });
+      return (
+        React.createElement("div", {className: navClasses},
+          React.createElement("section", null,
+            this.props.data.map(this.renderNavGroups)
+          ),
+          React.createElement("div", {className: classes, onClick: this.handleSlide}, React.createElement("i", null, this.state.toggleActive ? "◤" : "◢"))
+        )
+      );
+    },
+    renderNavGroups: function(child, index) {
+      var classes = React.addons.classSet({
+        'navGroup': true,
+        'navGroupActive': this.props.currentGroup === child.group,
+      });
+      return (
+        React.createElement("div", {className: classes, key: index},
+          React.createElement("h3", null, child.group),
+          React.createElement("ul", null,
+            child.items.map(this.renderNavItems)
+          )
+        )
+      );
+    },
+    renderNavItems: function(child, index) {
+      var itemClasses = React.addons.classSet({
+        'navListItem': true,
+        'navListItemActive': this.props.currentDoc === child.title,
+      });
+      var classes = React.addons.classSet({
+        'navItem': true,
+        'navItemActive': this.props.currentDoc === child.title,
+      });
+      return (
+        React.createElement("li", {className: itemClasses, key: index}, React.createElement("a", {className: classes, href: child.url},  child.title))
+      );
+    },
+  });
+
+  function docNavRender(docnavData) {
+    React.render(
+      React.createElement(DocNav, {data: docnavData}),
+      document.getElementById('doc_nav')
+    );
+  }
+  docNavRender(docnavData);
+</script>
+
+    <div class="post">
+  <header class="post-header">
+    <h1 class="post-title">React Native</h1>
+  </header>
+
+  <article class="post-content">
+   
+      <p>Nuclide has built-in support for the <a href="https://facebook.github.io/react-native/">React Native</a>
+framework. React Native provides a set of components and extensions that allows you to easily write
+native iOS and Android applications using the <a href="/docs/languages/flow">Flow</a> and
+<a href="/docs/languages/other#javascript">JavaScript</a> programming languages and the
+<a href="http://facebook.github.io/react/">React</a> UI library.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#features" id="markdown-toc-features">Features</a></li>
+  <li><a href="#running-applications" id="markdown-toc-running-applications">Running applications</a>    <ul>
+      <li><a href="#metro" id="markdown-toc-metro">Metro</a></li>
+      <li><a href="#command-line" id="markdown-toc-command-line">Command Line</a></li>
+    </ul>
+  </li>
+  <li><a href="#support" id="markdown-toc-support">Support</a>    <ul>
+      <li><a href="#loading-a-react-native-project" id="markdown-toc-loading-a-react-native-project">Loading a React Native Project</a></li>
+      <li><a href="#metro-1" id="markdown-toc-metro-1">Metro</a></li>
+      <li><a href="#run-the-react-native-application" id="markdown-toc-run-the-react-native-application">Run the React Native Application</a></li>
+      <li><a href="#element-inspector" id="markdown-toc-element-inspector">Element Inspector</a></li>
+    </ul>
+  </li>
+  <li><a href="#simulator-logs" id="markdown-toc-simulator-logs">Simulator Logs</a></li>
+  <li><a href="#debugging" id="markdown-toc-debugging">Debugging</a></li>
+</ul>
+
+<h2 id="features">Features</h2>
+
+<p>If your React Native apps are primarily written in <a href="/docs/languages/flow">Flow</a>, you get all of its
+<a href="/docs/languages/flow/#features">features</a> within Nuclide, including
+<a href="/docs/languages/flow/#autocomplete">Autocomplete</a>,
+<a href="/docs/languages/flow/#features__code-diagnostics">Code Diagnostics</a>, etc.</p>
+
+<p><img src="/static/images/docs/platform-react-native-feature-autocomplete.png" alt="" /></p>
+
+<blockquote>
+  <p><a href="/docs/languages/other/#javascript">JavaScript</a> works well with Nuclide as well.</p>
+</blockquote>
+
+<blockquote>
+  <p>You can also write <a href="/docs/platforms/ios">native iOS (Objective-C)</a> code with React Native, and get
+features such as <a href="/docs/languages/objective-c/#default-features__automatic-square-bracket-completion">Automatic Square Bracket Completion</a> from Nuclide when doing so. Native Android code written in conjunction with React Native has <a href="/docs/platforms/android">minimal support</a>.</p>
+</blockquote>
+
+<h2 id="running-applications">Running applications</h2>
+
+<p>All React Native features are currently available from the <a href="/docs/editor/basics/#command-palette">Command Palette</a>.</p>
+
+<p>You run Metro from Nuclide and your application from the command line.</p>
+
+<h3 id="metro">Metro</h3>
+
+<p>From the <a href="/docs/editor/basics/#command-palette">Command Palette</a>, choose <code class="highlighter-rouge">Nuclide Metro: Start</code> to start Metro. The output in the <code class="highlighter-rouge">Console</code> panel indicates if Metro started or if it encountered any errors.</p>
+
+<p><img src="/static/images/docs/platform-react-native-start-packager.png" alt="" /></p>
+
+<p>The server runs on the default <code class="highlighter-rouge">port 8081</code>. You can stop and restart the server at anytime.</p>
+
+<h3 id="command-line">Command Line</h3>
+
+<p>Ensure that you are in the root directory of the React Native project, then run the application from the command-line:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>react-native run-ios
+<span class="gp">$ </span>react-native run-android
+</code></pre>
+</div>
+
+<p>This should bring up the Simulator with your running application inside.</p>
+
+<h2 id="support">Support</h2>
+
+<p>Nuclide has support for <a href="https://facebook.github.io/react-native/">React Native</a> for <a href="/docs/platforms/ios">iOS</a>.</p>
+
+<p>From Nuclide, you can start a React Native development server, inspect React Native elements.</p>
+
+<blockquote>
+  <p>In order to use React Native within Nuclide, you must
+<a href="https://facebook.github.io/react-native/docs/getting-started.html">install</a> it.</p>
+</blockquote>
+
+<h3 id="loading-a-react-native-project">Loading a React Native Project</h3>
+
+<p>You open a React Native project the
+<a href="/docs/quick-start/getting-started/#adding-a-project">usual way</a>. Nuclide will automatically
+establish that you have a React Native project by seeing the <code class="highlighter-rouge">node_modules/react-native</code> directory
+from the root of your project.</p>
+
+<h3 id="metro-1">Metro</h3>
+
+<p><a href="#running-applications__metro">Launch Metro from within Nuclide</a>.</p>
+
+<h3 id="run-the-react-native-application">Run the React Native Application</h3>
+
+<p><a href="#running-applications__command-line">Start your React Native application from the command-line</a>.</p>
+
+<h3 id="element-inspector">Element Inspector</h3>
+
+<p>Nuclide provides an Element Inspector, where you can view and toggle properties of your application.</p>
+
+<p>From the <a href="/docs/editor/basics/#command-palette">Command Palette</a>, choose <code class="highlighter-rouge">Nuclide React Inspector: Show</code> to open the <strong>React Inspector</strong> tab in the
+main <a href="/docs/editor/basics/#editing-area">Editing Area</a>.</p>
+
+<p><img src="/static/images/docs/platform-react-native-element-inspector.png" alt="" /></p>
+
+<p>To see the actual elements highlighted in the Nuclide Element Inspector also highlighted in the
+Simulator, you must enable the Simulator Inspector as well. Press <code class="highlighter-rouge">Cmd-D</code> (<code class="highlighter-rouge">Ctrl-D</code> on Linux) within
+the Simulator and choose <strong>Show Inspector</strong>.</p>
+
+<p><img src="/static/images/docs/platform-react-native-show-inspector.png" alt="" /></p>
+
+<h2 id="simulator-logs">Simulator Logs</h2>
+
+<p>Nuclide supports the <a href="/docs/platforms/ios#simulator-logs">iOS Simulator logs</a> and
+<a href="/docs/platforms/android#emulator-logs">Android Emulator logs</a> directly within Nuclide.</p>
+
+<h2 id="debugging">Debugging</h2>
+
+<p>Nuclide’s new React Native debugger support is ported from
+<a href="https://github.com/Microsoft/vscode-react-native">vscode-react-native</a> at
+version 0.5.7 (<a href="https://github.com/pelmers/vscode-react-native/tree/nuclide">fork source</a>).
+There are two ways to invoke the React Native debugger. Nuclide can either attach to
+a running packager, or it can launch the debug target in a new packager for
+debugging. Note that the debugger from Nuclide can only attach if the default
+Chrome debugger is not already running.</p>
+
+<p>Both cases require a workspace path which should be set to the directory
+containing the <code class="highlighter-rouge">package.json</code> file of the debug target. Launching the debugger
+also requires specifying the platform to debug, either <code class="highlighter-rouge">ios</code> or <code class="highlighter-rouge">android</code> as
+well as the target, either <code class="highlighter-rouge">simulator</code> or <code class="highlighter-rouge">device</code>. Note that debugging on an
+iOS device requires some manual setup; see
+<a href="https://github.com/Microsoft/vscode-react-native/blob/master/doc/debugging.md#debugging-on-ios-device">these instructions</a>.
+In most cases the default port setting of 8081 will be correct.</p>
+
+<blockquote>
+  <p>Changing the port setting in the debugger may require external setup, see
+<a href="https://github.com/facebook/react-native/issues/9145">the issue on GitHub</a></p>
+</blockquote>
+
+<p><img src="/static/images/docs/platform-react-native-debugger-ex.png" alt="" /></p>
+
+<blockquote>
+  <p>A DeprecationWarning: ‘root’ is deprecated error may appear when the program
+first runs, which can be safely dismissed.</p>
+</blockquote>
+
+    
+  </article>
+  
+</div>
+
+
+  </div>
+</div>
+
+    <div class="footerContainer">
+  <div id="footer_wrap" class="wrapper footerWrapper">
+    <section id="fb_oss" class="fbOpenSourceFooter">
+      <a href="https://code.facebook.com/projects/" target="_blank"><img src="/static/oss_logo.png" alt="Facebook Open Source" title="Facebook Open Source" /></a>
+    </section>
+  </div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44373548-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="/js/jekyll-link-anchors.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript" src="/js/docsearch.js"></script>
+<script type="text/javascript" src="/js/get-required-versions.js"></script>
+
+  </body>
+
+</html>

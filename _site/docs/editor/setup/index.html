@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.1.0 -->
+<title>Setup - Nuclide</title>
+<meta property="og:title" content="Setup" />
+<meta name="description" content="There are two supported platforms for Nuclide, Linux and macOS." />
+<meta property="og:description" content="There are two supported platforms for Nuclide, Linux and macOS." />
+<link rel="canonical" href="http://localhost:4000/docs/editor/setup/" />
+<meta property="og:url" content="http://localhost:4000/docs/editor/setup/" />
+<meta property="og:site_name" content="Nuclide" />
+<meta property="og:image" content="http://localhost:4000/static/og_image.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-18T17:06:10-07:00" />
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "BlogPosting",
+"headline": "Setup",
+"image": "http://localhost:4000/static/og_image.png",
+"datePublished": "2018-03-18T17:06:10-07:00",
+"description": "There are two supported platforms for Nuclide, Linux and macOS.",
+"publisher": {"@type": "Organization",
+"logo": {"@type": "ImageObject",
+"url": "http://localhost:4000/static/og_image.png"}},
+"url": "http://localhost:4000/docs/editor/setup/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+
+  
+  <link rel="stylesheet" href="/static/fonts/332720/BC699FA675F9356E3.css" media="screen">
+  <link rel="stylesheet" href="/css/main.css" media="screen">
+  <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+
+  
+  <script src="https://unpkg.com/react@0.13.1/dist/react-with-addons.min.js"></script>
+
+  
+
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Nuclide" />
+</head>
+
+  <body>
+    <div id="headerBar" class="headerBarContainer  visible">
+  <header>
+    <a href="http://localhost:4000/">
+      <img src="/static/logo_nav.png" height="30" width="25" alt="">
+      <h2>Nuclide</h2>
+    </a>
+    <div class="navigationWrapper navigationFull" id="flat_nav">
+      <nav class="navigation">
+        <ul>
+          
+            <li class="navItem navItemActive">
+              
+                <a href="/docs/">Docs</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/blog/">Blog</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/support/">Support</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="https://github.com/facebook/nuclide">GitHub</a>
+              
+            </li>
+          
+          <li class="algolia-search-wrapper">
+            <input id="algolia-doc-search" type="search" placeholder="Search docs..." />
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navigationWrapper navigationSlider" id="navigation_wrap"></div>
+  </header>
+  <script>
+    var event = document.createEvent('Event');
+    event.initEvent('slide', true, true);
+    document.addEventListener('slide', function (e) {
+      document.body.classList.toggle('sliderActive');
+    }, false);
+    var navData = [
+      
+      {
+        href       : "/docs/",
+        text       : "Docs",
+      },
+      
+      {
+        href       : "/blog/",
+        text       : "Blog",
+      },
+      
+      {
+        href       : "/support/",
+        text       : "Support",
+      },
+      
+      {
+        href       : "https://github.com/facebook/nuclide",
+        text       : "GitHub",
+      },
+      
+    ];
+  </script>
+  <script type="text/javascript">
+    var Nav = React.createClass({displayName: "Nav",
+      getInitialState: function() {
+        return {
+          currentPath: document.location.pathname,
+          slideoutActive: false,
+        };
+      },
+      getDefaultProps: function() {
+        return {
+          data: navData,
+        }
+      },
+      handleClick: function(id) {
+        this.setState({
+          slideoutActive: false,
+        });
+      },
+      handleSlide: function(id) {
+        this.setState({
+          slideoutActive: !this.state.slideoutActive,
+        });
+      },
+      render: function() {
+        var classes = React.addons.classSet({
+          'navSlideout': true,
+          'navSlideoutActive': this.state.slideoutActive,
+        });
+        var navClasses = React.addons.classSet({
+          'slidingNav': true,
+          'slidingNavActive': this.state.slideoutActive,
+        });
+        return (
+          React.createElement("div", null,
+            React.createElement("div", {className: classes, onClick: this.handleSlide},
+              React.createElement("i", null, "☰")
+            ),
+            React.createElement("nav", {className: navClasses},
+              React.createElement("ul", null,
+                this.props.data.map(this.renderNavItems)
+              )
+            )
+          )
+        );
+      },
+      renderNavItems: function(child, index) {
+        var classes = React.addons.classSet({
+          'navItem': true,
+          'navItemActive': this.state.currentPath === child.href,
+        });
+        return (
+          React.createElement("li", {key: index, className: classes},
+            React.createElement("a", {onClick: this.handleClick, href: child.href}, child.text)
+          )
+        );
+      },
+    });
+
+    function render(navData) {
+      React.render(
+        React.createElement(Nav, {data: navData}),
+        document.getElementById('navigation_wrap')
+      );
+    }
+    render(navData);
+  </script>
+</div>
+
+    <div class="mainContainer blogContainer postContainer">
+  <div id="main_wrap" class="wrapper mainWrapper">
+    <nav class="toc" id="doc_nav"></nav>
+<script>
+  var docnavData = [
+    
+    {
+      group     : "Quick Start",
+      items     : [
+        
+        
+        {
+          key : "/docs/quick-start/getting-started/",
+          title : "Getting Started",
+          url : "/docs/quick-start/getting-started/",
+        },
+        
+        
+        {
+          key : "/docs/editor/basics/",
+          title : "Basics",
+          url : "/docs/editor/basics/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "About",
+      items     : [
+        
+        
+        {
+          key : "/docs/editor/setup/",
+          title : "Setup",
+          url : "/docs/editor/setup/",
+        },
+        
+        
+        {
+          key : "/docs/editor/keyboard-shortcuts/",
+          title : "Keyboard Shortcuts",
+          url : "/docs/editor/keyboard-shortcuts/",
+        },
+        
+        
+        {
+          key : "/docs/editor/uninstall/",
+          title : "Uninstalling",
+          url : "/docs/editor/uninstall/",
+        },
+        
+        
+        {
+          key : "/docs/help/faq/",
+          title : "FAQ",
+          url : "/docs/help/faq/",
+        },
+        
+        
+        {
+          key : "/docs/help/troubleshooting/",
+          title : "Troubleshooting",
+          url : "/docs/help/troubleshooting/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Feature Guides",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/remote/",
+          title : "Remote Development",
+          url : "/docs/features/remote/",
+        },
+        
+        
+        {
+          key : "/docs/features/debugger/",
+          title : "Debugger",
+          url : "/docs/features/debugger/",
+        },
+        
+        
+        {
+          key : "/docs/features/task-runner/",
+          title : "Task Runner",
+          url : "/docs/features/task-runner/",
+        },
+        
+        
+        {
+          key : "/docs/features/quick-open/",
+          title : "Quick Open",
+          url : "/docs/features/quick-open/",
+        },
+        
+        
+        {
+          key : "/docs/features/working-sets/",
+          title : "Working Sets",
+          url : "/docs/features/working-sets/",
+        },
+        
+        
+        {
+          key : "/docs/features/outline-view/",
+          title : "Outline",
+          url : "/docs/features/outline-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/context-view/",
+          title : "Context View",
+          url : "/docs/features/context-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/health-statistics/",
+          title : "Health Statistics",
+          url : "/docs/features/health-statistics/",
+        },
+        
+        
+        {
+          key : "/docs/features/terminal/",
+          title : "Integrated Terminal",
+          url : "/docs/features/terminal/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Plugins",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/hg/",
+          title : "Mercurial Support",
+          url : "/docs/features/hg/",
+        },
+        
+        
+        {
+          key : "/docs/features/toolbar/",
+          title : "Toolbar",
+          url : "/docs/features/toolbar/",
+        },
+        
+        
+        {
+          key : "/docs/features/buck/",
+          title : "Buck",
+          url : "/docs/features/buck/",
+        },
+        
+        
+        {
+          key : "/docs/features/format-js/",
+          title : "Format JS",
+          url : "/docs/features/format-js/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Languages",
+      items     : [
+        
+        
+        {
+          key : "/docs/languages/hack/",
+          title : "Hack",
+          url : "/docs/languages/hack/",
+        },
+        
+        
+        {
+          key : "/docs/languages/flow/",
+          title : "Flow",
+          url : "/docs/languages/flow/",
+        },
+        
+        
+        {
+          key : "/docs/languages/objective-c/",
+          title : "Objective-C",
+          url : "/docs/languages/objective-c/",
+        },
+        
+        
+        {
+          key : "/docs/languages/cpp/",
+          title : "C++",
+          url : "/docs/languages/cpp/",
+        },
+        
+        
+        {
+          key : "/docs/languages/python/",
+          title : "Python",
+          url : "/docs/languages/python/",
+        },
+        
+        
+        {
+          key : "/docs/languages/swift/",
+          title : "Swift",
+          url : "/docs/languages/swift/",
+        },
+        
+        
+        {
+          key : "/docs/languages/graphql/",
+          title : "GraphQL",
+          url : "/docs/languages/graphql/",
+        },
+        
+        
+        {
+          key : "/docs/languages/other/",
+          title : "PHP, JS, OCaml",
+          url : "/docs/languages/other/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Platforms",
+      items     : [
+        
+        
+        {
+          key : "/docs/platforms/ios/",
+          title : "iOS",
+          url : "/docs/platforms/ios/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/android/",
+          title : "Android",
+          url : "/docs/platforms/android/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/react-native/",
+          title : "React Native",
+          url : "/docs/platforms/react-native/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/web/",
+          title : "Web Development",
+          url : "/docs/platforms/web/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Advanced Topics",
+      items     : [
+        
+        
+        {
+          key : "/docs/advanced-topics/building-from-source/",
+          title : "Building Nuclide From Source",
+          url : "/docs/advanced-topics/building-from-source/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/custom-keybindings/",
+          title : "Custom Keybindings",
+          url : "/docs/advanced-topics/custom-keybindings/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/linter-package-compatibility/",
+          title : "Linter Package Compatibility",
+          url : "/docs/advanced-topics/linter-package-compatibility/",
+        }
+        
+      ],
+    },
+    
+  ];
+</script>
+<script type="text/javascript">
+  var DocNav = React.createClass({displayName: "DocNav",
+    getInitialState: function() {
+      return {
+        toggleActive: false,
+      };
+    },
+    getDefaultProps: function() {
+      return {
+        currentDoc: "Setup",
+        currentGroup: "",
+        data: docnavData,
+      }
+    },
+    handleSlide: function(id) {
+      this.setState({
+        toggleActive: !this.state.toggleActive,
+      });
+    },
+    render: function() {
+      var classes = React.addons.classSet({
+        'navToggle': true,
+        'navToggleActive': this.state.toggleActive,
+      });
+      var navClasses = React.addons.classSet({
+        'toggleNav': true,
+        'toggleNavActive': this.state.toggleActive,
+      });
+      return (
+        React.createElement("div", {className: navClasses},
+          React.createElement("section", null,
+            this.props.data.map(this.renderNavGroups)
+          ),
+          React.createElement("div", {className: classes, onClick: this.handleSlide}, React.createElement("i", null, this.state.toggleActive ? "◤" : "◢"))
+        )
+      );
+    },
+    renderNavGroups: function(child, index) {
+      var classes = React.addons.classSet({
+        'navGroup': true,
+        'navGroupActive': this.props.currentGroup === child.group,
+      });
+      return (
+        React.createElement("div", {className: classes, key: index},
+          React.createElement("h3", null, child.group),
+          React.createElement("ul", null,
+            child.items.map(this.renderNavItems)
+          )
+        )
+      );
+    },
+    renderNavItems: function(child, index) {
+      var itemClasses = React.addons.classSet({
+        'navListItem': true,
+        'navListItemActive': this.props.currentDoc === child.title,
+      });
+      var classes = React.addons.classSet({
+        'navItem': true,
+        'navItemActive': this.props.currentDoc === child.title,
+      });
+      return (
+        React.createElement("li", {className: itemClasses, key: index}, React.createElement("a", {className: classes, href: child.url},  child.title))
+      );
+    },
+  });
+
+  function docNavRender(docnavData) {
+    React.render(
+      React.createElement(DocNav, {data: docnavData}),
+      document.getElementById('doc_nav')
+    );
+  }
+  docNavRender(docnavData);
+</script>
+
+    <div class="post">
+  <header class="post-header">
+    <h1 class="post-title">Setup</h1>
+  </header>
+
+  <article class="post-content">
+   
+      <p>There are two supported platforms for Nuclide, <a href="#linux">Linux</a> and <a href="#macos">macOS</a>.</p>
+
+<blockquote>
+  <p>Nuclide can be installed on <a href="#windows">Windows</a>, but it is
+<a href="https://github.com/facebook/nuclide/issues/321">not fully supported</a>.</p>
+</blockquote>
+
+<p>These instructions are for installing the released package of Nuclide. For advanced users, you can
+<a href="/docs/advanced-topics/building-from-source">build from source</a>, but this is not officially
+supported and stability is not guaranteed.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#quick-install" id="markdown-toc-quick-install">Quick Install</a></li>
+  <li><a href="#macos" id="markdown-toc-macos">macOS</a>    <ul>
+      <li><a href="#prerequisites" id="markdown-toc-prerequisites">Prerequisites</a></li>
+      <li><a href="#installation" id="markdown-toc-installation">Installation</a></li>
+    </ul>
+  </li>
+  <li><a href="#linux" id="markdown-toc-linux">Linux</a>    <ul>
+      <li><a href="#prerequisites-1" id="markdown-toc-prerequisites-1">Prerequisites</a></li>
+      <li><a href="#installation-1" id="markdown-toc-installation-1">Installation</a></li>
+    </ul>
+  </li>
+  <li><a href="#windows" id="markdown-toc-windows">Windows</a>    <ul>
+      <li><a href="#prerequisites-2" id="markdown-toc-prerequisites-2">Prerequisites</a></li>
+      <li><a href="#installation-2" id="markdown-toc-installation-2">Installation</a></li>
+    </ul>
+  </li>
+  <li><a href="#post-installation" id="markdown-toc-post-installation">Post Installation</a>    <ul>
+      <li><a href="#recommended-packages" id="markdown-toc-recommended-packages">Recommended Packages</a></li>
+      <li><a href="#installing-nuclide-server" id="markdown-toc-installing-nuclide-server">Installing Nuclide Server</a></li>
+      <li><a href="#other-installations" id="markdown-toc-other-installations">Other Installations</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="quick-install">Quick Install</h2>
+
+<p class="atom"></p>
+
+<p>Assuming you have met all the prerequisites for your platform, the easiest way to install Nuclide is within Atom itself:</p>
+
+<ol>
+  <li>Open Atom.</li>
+  <li>Choose <code class="highlighter-rouge">Atom | Preferences</code> (<code class="highlighter-rouge">Edit | Preferences</code> on Linux and <code class="highlighter-rouge">File | Settings</code> on Windows) to bring up the <strong>Settings</strong> tab.</li>
+  <li>In the <strong>Settings</strong> tab, select <strong>Install</strong> from the list at the left.</li>
+  <li>In the search box, type “Nuclide” and press the <code class="highlighter-rouge">Enter</code> key.</li>
+  <li>Click the <strong>Install</strong> button for the <code class="highlighter-rouge">nuclide</code> package.</li>
+</ol>
+
+<blockquote>
+  <p>Installing Nuclide within the Atom Packages UI is the recommended method, however you can install Nuclide from the command-line, if you wish, using:</p>
+
+  <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>apm install nuclide
+</code></pre>
+  </div>
+
+</blockquote>
+
+<p>Otherwise, see your installation platform below for detailed installation instructions, including
+prerequisites.</p>
+
+<h2 id="macos">macOS</h2>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<p class="atom"></p>
+
+<p>You can follow the <a href="http://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-mac">instructions on the Atom website</a>. Essentially,
+if you go to <a href="https://atom.io/">Atom.io</a>, there will be direct link to download Atom.</p>
+
+<h3 id="installation">Installation</h3>
+
+<p>Install Nuclide through the Atom Packages UI:</p>
+
+<ol>
+  <li>Open Atom.</li>
+  <li>Choose <code class="highlighter-rouge">Atom | Preferences</code> to bring up the <strong>Settings</strong> tab.</li>
+  <li>In the <strong>Settings</strong> tab, select <strong>Install</strong> from the list at the left.</li>
+  <li>In the search box, type “Nuclide” and press the <code class="highlighter-rouge">Enter</code> key.</li>
+  <li>Click the <strong>Install</strong> button for the <code class="highlighter-rouge">nuclide</code> package.</li>
+</ol>
+
+<p><img src="/static/images/docs/editor-setup-atom-install-nuclide.png" alt="" /></p>
+
+<blockquote>
+  <p>Installing Nuclide within the Atom Packages UI is the recommended method, however you can install Nuclide from the command-line, if you wish, using:</p>
+
+  <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>apm install nuclide
+</code></pre>
+  </div>
+
+</blockquote>
+
+<h2 id="linux">Linux</h2>
+
+<h3 id="prerequisites-1">Prerequisites</h3>
+
+<p class="atom"></p>
+
+<blockquote>
+  <p>Git is required to install Atom on Linux.</p>
+</blockquote>
+
+<p>There are <a href="http://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-linux">instructions on the Atom website</a> for installing Atom on Linux, but it doesn’t mention the Git requirement.</p>
+
+<p>Instead, follow the command-line process below which shows you the installation of all the
+necessary prerequisites, including Git.</p>
+
+<p>This is an installation on Ubuntu. If you are using an RPM-based distro, you should replace the
+<code class="highlighter-rouge">apt-get</code> commands with the appropriate <code class="highlighter-rouge">rpm</code> or <code class="highlighter-rouge">yum</code> commands. Depending on your permissions, you
+may need to prefix these commands with <code class="highlighter-rouge">sudo</code>.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo apt-get update
+<span class="c"># optional</span>
+<span class="gp">$ </span>sudo apt-get upgrade
+<span class="gp">$ </span>sudo apt-get install git
+<span class="gp">$ </span>sudo add-apt-repository ppa:webupd8team/atom
+<span class="gp">$ </span>sudo apt-get update
+<span class="gp">$ </span>sudo apt-get install atom
+<span class="c"># Run atom from the command-line if you want</span>
+<span class="gp">$ </span>atom
+</code></pre>
+</div>
+
+<h3 id="installation-1">Installation</h3>
+
+<p>Install Nuclide through the Atom Packages UI:</p>
+
+<ol>
+  <li>Open Atom.</li>
+  <li>Choose <code class="highlighter-rouge">Edit | Preferences</code> to bring up the <strong>Settings</strong> tab.</li>
+  <li>In the <strong>Settings</strong> tab, select <strong>Install</strong> from the list at the left.</li>
+  <li>In the search box, type “Nuclide” and press the <code class="highlighter-rouge">Enter</code> key.</li>
+  <li>Click the <strong>Install</strong> button for the <code class="highlighter-rouge">nuclide</code> package.</li>
+</ol>
+
+<blockquote>
+  <p>Installing Nuclide within the Atom Packages UI is the recommended method, however you can install Nuclide from the command-line, if you wish, using:</p>
+
+  <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>apm install nuclide
+</code></pre>
+  </div>
+
+</blockquote>
+
+<h2 id="windows">Windows</h2>
+
+<h3 id="prerequisites-2">Prerequisites</h3>
+
+<p>Atom can be installed on Windows.</p>
+
+<p class="atom"></p>
+
+<p>You can follow the <a href="http://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-windows">instructions on the Atom website</a>. Essentially,
+if you go to <a href="https://atom.io/">Atom.io</a>, there will be direct link to download Atom.</p>
+
+<blockquote>
+  <p>Some features of Nuclide may work on Windows, but the full Nuclide experience is <a href="https://github.com/facebook/nuclide/issues/321">not yet supported</a>.</p>
+
+  <p><a href="/docs/features/remote">Remote development</a> functionality (seeing the directory tree, editing remote files, etc.) is generally successful on Windows. If you have <a href="/docs/languages/hack">Hack</a> or <a href="/docs/languages/flow">Flow</a> on a remote server, it is possible that you could get some of those language integrations to work as well.</p>
+
+  <p>However, local projects may run into issues.</p>
+</blockquote>
+
+<h3 id="installation-2">Installation</h3>
+
+<p>Install Nuclide through the Atom Packages UI:</p>
+
+<ol>
+  <li>Open Atom.</li>
+  <li>Choose <code class="highlighter-rouge">File | Settings</code> to bring up the <strong>Settings</strong> tab.</li>
+  <li>In the <strong>Settings</strong> tab, select <strong>Install</strong> from the list at the left.</li>
+  <li>In the search box, type “Nuclide” and press the <code class="highlighter-rouge">Enter</code> key.</li>
+  <li>Click the <strong>Install</strong> button for the <code class="highlighter-rouge">nuclide</code> package.</li>
+</ol>
+
+<p><img src="/static/images/docs/editor-setup-atom-install-windows.png" alt="" /></p>
+
+<h2 id="post-installation">Post Installation</h2>
+
+<p>After installation, running Atom will automatically load Nuclide.</p>
+
+<h3 id="recommended-packages">Recommended Packages</h3>
+
+<p>By default, Nuclide does not install all of the recommended Atom packages that enhance the Nuclide
+experience. This was done purposely in order to ensure that users have to opt-in to some features
+rather than obtrusively modify their work environment.</p>
+
+<p>Recommended packages include:</p>
+
+<ul>
+  <li><a href="https://atom.io/packages/tool-bar"><code class="highlighter-rouge">tool-bar</code></a> to enable the <a href="/docs/features/toolbar/">Nuclide toolbar</a>.</li>
+  <li><a href="https://atom.io/packages/sort-lines"><code class="highlighter-rouge">sort-lines</code></a> to enable sorting lines of text.</li>
+  <li><a href="https://atom.io/packages/language-ocaml"><code class="highlighter-rouge">language-ocaml</code></a> to enable <a href="/docs/languages/other/#ocaml">OCaml</a> language syntax highlighting.</li>
+  <li><a href="https://atom.io/packages/language-babel"><code class="highlighter-rouge">language-babel</code></a> to enable language grammar for <a href="/docs/languages/flow/">JS, Flow and React JS</a>, etc.</li>
+  <li>…and <a href="https://github.com/facebook/nuclide/blob/master/package.json">others</a> under <code class="highlighter-rouge">package-deps</code>.</li>
+</ul>
+
+<p><br />
+In order to install all of the recommended packages:</p>
+
+<ol>
+  <li>Go to <code class="highlighter-rouge">Packages | Settings View | Manage Packages</code>.</li>
+  <li>Search for the <code class="highlighter-rouge">nuclide</code> package, and click on the package’s <strong>Settings</strong> button.</li>
+  <li>Select the <strong>Install Recommended Packages on Startup</strong> checkbox.</li>
+</ol>
+
+<p><img src="/static/images/docs/editor-setup-recommended-packages.png" alt="" /></p>
+
+<h3 id="installing-nuclide-server">Installing Nuclide Server</h3>
+
+<p>If you want to use Nuclide for remote development, you’ll also need to set up the <code class="highlighter-rouge">npm nuclide</code>
+package. Instructions can be found in the <a href="/docs/features/remote/">Remote Development docs</a>.</p>
+
+<h3 id="other-installations">Other Installations</h3>
+
+<p>To benefit from all of Nuclide’s features, we recommend you also install the following:</p>
+
+<ul>
+  <li><a href="https://facebook.github.io/watchman/">Watchman</a> - version 3.2 or above. It must be in <code class="highlighter-rouge">/usr/local/bin/</code> or in your <code class="highlighter-rouge">$PATH</code> environment variable.</li>
+</ul>
+
+<blockquote>
+  <p>Without Watchman, Nuclide will lose some functionality of its <a href="/docs/features/hg">Mercurial</a>, <a href="/docs/features/remote">Remote Development</a>, and <a href="/docs/quick-start/getting-started/#quick-open">Quick Open</a> features.</p>
+</blockquote>
+
+<p><br /></p>
+
+<ul>
+  <li><a href="/docs/languages/flow/">Flow</a></li>
+  <li><a href="/docs/languages/hack/">Hack</a></li>
+  <li><a href="/docs/features/hg/">Mercurial</a></li>
+</ul>
+
+    
+  </article>
+  
+</div>
+
+
+  </div>
+</div>
+
+    <div class="footerContainer">
+  <div id="footer_wrap" class="wrapper footerWrapper">
+    <section id="fb_oss" class="fbOpenSourceFooter">
+      <a href="https://code.facebook.com/projects/" target="_blank"><img src="/static/oss_logo.png" alt="Facebook Open Source" title="Facebook Open Source" /></a>
+    </section>
+  </div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44373548-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="/js/jekyll-link-anchors.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript" src="/js/docsearch.js"></script>
+<script type="text/javascript" src="/js/get-required-versions.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.1.0 -->
+<title>Debugger - Nuclide</title>
+<meta property="og:title" content="Debugger" />
+<meta name="description" content="One of the key features of Nuclide is its multiple-language debugging support provided with a debugger interface inspired by the familiar Chrome DevTools. The Nuclide Debugger provides many capabilities allowing you to have a productive debug loop, including inspection, watches, setting breakpoints, step in/over/out, etc." />
+<meta property="og:description" content="One of the key features of Nuclide is its multiple-language debugging support provided with a debugger interface inspired by the familiar Chrome DevTools. The Nuclide Debugger provides many capabilities allowing you to have a productive debug loop, including inspection, watches, setting breakpoints, step in/over/out, etc." />
+<link rel="canonical" href="http://localhost:4000/docs/features/debugger/" />
+<meta property="og:url" content="http://localhost:4000/docs/features/debugger/" />
+<meta property="og:site_name" content="Nuclide" />
+<meta property="og:image" content="http://localhost:4000/static/og_image.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-18T17:06:10-07:00" />
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "BlogPosting",
+"headline": "Debugger",
+"image": "http://localhost:4000/static/og_image.png",
+"datePublished": "2018-03-18T17:06:10-07:00",
+"description": "One of the key features of Nuclide is its multiple-language debugging support provided with a debugger interface inspired by the familiar Chrome DevTools. The Nuclide Debugger provides many capabilities allowing you to have a productive debug loop, including inspection, watches, setting breakpoints, step in/over/out, etc.",
+"publisher": {"@type": "Organization",
+"logo": {"@type": "ImageObject",
+"url": "http://localhost:4000/static/og_image.png"}},
+"url": "http://localhost:4000/docs/features/debugger/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+
+  
+  <link rel="stylesheet" href="/static/fonts/332720/BC699FA675F9356E3.css" media="screen">
+  <link rel="stylesheet" href="/css/main.css" media="screen">
+  <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+
+  
+  <script src="https://unpkg.com/react@0.13.1/dist/react-with-addons.min.js"></script>
+
+  
+
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Nuclide" />
+</head>
+
+  <body>
+    <div id="headerBar" class="headerBarContainer  visible">
+  <header>
+    <a href="http://localhost:4000/">
+      <img src="/static/logo_nav.png" height="30" width="25" alt="">
+      <h2>Nuclide</h2>
+    </a>
+    <div class="navigationWrapper navigationFull" id="flat_nav">
+      <nav class="navigation">
+        <ul>
+          
+            <li class="navItem navItemActive">
+              
+                <a href="/docs/">Docs</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/blog/">Blog</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/support/">Support</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="https://github.com/facebook/nuclide">GitHub</a>
+              
+            </li>
+          
+          <li class="algolia-search-wrapper">
+            <input id="algolia-doc-search" type="search" placeholder="Search docs..." />
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navigationWrapper navigationSlider" id="navigation_wrap"></div>
+  </header>
+  <script>
+    var event = document.createEvent('Event');
+    event.initEvent('slide', true, true);
+    document.addEventListener('slide', function (e) {
+      document.body.classList.toggle('sliderActive');
+    }, false);
+    var navData = [
+      
+      {
+        href       : "/docs/",
+        text       : "Docs",
+      },
+      
+      {
+        href       : "/blog/",
+        text       : "Blog",
+      },
+      
+      {
+        href       : "/support/",
+        text       : "Support",
+      },
+      
+      {
+        href       : "https://github.com/facebook/nuclide",
+        text       : "GitHub",
+      },
+      
+    ];
+  </script>
+  <script type="text/javascript">
+    var Nav = React.createClass({displayName: "Nav",
+      getInitialState: function() {
+        return {
+          currentPath: document.location.pathname,
+          slideoutActive: false,
+        };
+      },
+      getDefaultProps: function() {
+        return {
+          data: navData,
+        }
+      },
+      handleClick: function(id) {
+        this.setState({
+          slideoutActive: false,
+        });
+      },
+      handleSlide: function(id) {
+        this.setState({
+          slideoutActive: !this.state.slideoutActive,
+        });
+      },
+      render: function() {
+        var classes = React.addons.classSet({
+          'navSlideout': true,
+          'navSlideoutActive': this.state.slideoutActive,
+        });
+        var navClasses = React.addons.classSet({
+          'slidingNav': true,
+          'slidingNavActive': this.state.slideoutActive,
+        });
+        return (
+          React.createElement("div", null,
+            React.createElement("div", {className: classes, onClick: this.handleSlide},
+              React.createElement("i", null, "☰")
+            ),
+            React.createElement("nav", {className: navClasses},
+              React.createElement("ul", null,
+                this.props.data.map(this.renderNavItems)
+              )
+            )
+          )
+        );
+      },
+      renderNavItems: function(child, index) {
+        var classes = React.addons.classSet({
+          'navItem': true,
+          'navItemActive': this.state.currentPath === child.href,
+        });
+        return (
+          React.createElement("li", {key: index, className: classes},
+            React.createElement("a", {onClick: this.handleClick, href: child.href}, child.text)
+          )
+        );
+      },
+    });
+
+    function render(navData) {
+      React.render(
+        React.createElement(Nav, {data: navData}),
+        document.getElementById('navigation_wrap')
+      );
+    }
+    render(navData);
+  </script>
+</div>
+
+    <div class="mainContainer blogContainer postContainer">
+  <div id="main_wrap" class="wrapper mainWrapper">
+    <nav class="toc" id="doc_nav"></nav>
+<script>
+  var docnavData = [
+    
+    {
+      group     : "Quick Start",
+      items     : [
+        
+        
+        {
+          key : "/docs/quick-start/getting-started/",
+          title : "Getting Started",
+          url : "/docs/quick-start/getting-started/",
+        },
+        
+        
+        {
+          key : "/docs/editor/basics/",
+          title : "Basics",
+          url : "/docs/editor/basics/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "About",
+      items     : [
+        
+        
+        {
+          key : "/docs/editor/setup/",
+          title : "Setup",
+          url : "/docs/editor/setup/",
+        },
+        
+        
+        {
+          key : "/docs/editor/keyboard-shortcuts/",
+          title : "Keyboard Shortcuts",
+          url : "/docs/editor/keyboard-shortcuts/",
+        },
+        
+        
+        {
+          key : "/docs/editor/uninstall/",
+          title : "Uninstalling",
+          url : "/docs/editor/uninstall/",
+        },
+        
+        
+        {
+          key : "/docs/help/faq/",
+          title : "FAQ",
+          url : "/docs/help/faq/",
+        },
+        
+        
+        {
+          key : "/docs/help/troubleshooting/",
+          title : "Troubleshooting",
+          url : "/docs/help/troubleshooting/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Feature Guides",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/remote/",
+          title : "Remote Development",
+          url : "/docs/features/remote/",
+        },
+        
+        
+        {
+          key : "/docs/features/debugger/",
+          title : "Debugger",
+          url : "/docs/features/debugger/",
+        },
+        
+        
+        {
+          key : "/docs/features/task-runner/",
+          title : "Task Runner",
+          url : "/docs/features/task-runner/",
+        },
+        
+        
+        {
+          key : "/docs/features/quick-open/",
+          title : "Quick Open",
+          url : "/docs/features/quick-open/",
+        },
+        
+        
+        {
+          key : "/docs/features/working-sets/",
+          title : "Working Sets",
+          url : "/docs/features/working-sets/",
+        },
+        
+        
+        {
+          key : "/docs/features/outline-view/",
+          title : "Outline",
+          url : "/docs/features/outline-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/context-view/",
+          title : "Context View",
+          url : "/docs/features/context-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/health-statistics/",
+          title : "Health Statistics",
+          url : "/docs/features/health-statistics/",
+        },
+        
+        
+        {
+          key : "/docs/features/terminal/",
+          title : "Integrated Terminal",
+          url : "/docs/features/terminal/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Plugins",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/hg/",
+          title : "Mercurial Support",
+          url : "/docs/features/hg/",
+        },
+        
+        
+        {
+          key : "/docs/features/toolbar/",
+          title : "Toolbar",
+          url : "/docs/features/toolbar/",
+        },
+        
+        
+        {
+          key : "/docs/features/buck/",
+          title : "Buck",
+          url : "/docs/features/buck/",
+        },
+        
+        
+        {
+          key : "/docs/features/format-js/",
+          title : "Format JS",
+          url : "/docs/features/format-js/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Languages",
+      items     : [
+        
+        
+        {
+          key : "/docs/languages/hack/",
+          title : "Hack",
+          url : "/docs/languages/hack/",
+        },
+        
+        
+        {
+          key : "/docs/languages/flow/",
+          title : "Flow",
+          url : "/docs/languages/flow/",
+        },
+        
+        
+        {
+          key : "/docs/languages/objective-c/",
+          title : "Objective-C",
+          url : "/docs/languages/objective-c/",
+        },
+        
+        
+        {
+          key : "/docs/languages/cpp/",
+          title : "C++",
+          url : "/docs/languages/cpp/",
+        },
+        
+        
+        {
+          key : "/docs/languages/python/",
+          title : "Python",
+          url : "/docs/languages/python/",
+        },
+        
+        
+        {
+          key : "/docs/languages/swift/",
+          title : "Swift",
+          url : "/docs/languages/swift/",
+        },
+        
+        
+        {
+          key : "/docs/languages/graphql/",
+          title : "GraphQL",
+          url : "/docs/languages/graphql/",
+        },
+        
+        
+        {
+          key : "/docs/languages/other/",
+          title : "PHP, JS, OCaml",
+          url : "/docs/languages/other/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Platforms",
+      items     : [
+        
+        
+        {
+          key : "/docs/platforms/ios/",
+          title : "iOS",
+          url : "/docs/platforms/ios/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/android/",
+          title : "Android",
+          url : "/docs/platforms/android/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/react-native/",
+          title : "React Native",
+          url : "/docs/platforms/react-native/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/web/",
+          title : "Web Development",
+          url : "/docs/platforms/web/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Advanced Topics",
+      items     : [
+        
+        
+        {
+          key : "/docs/advanced-topics/building-from-source/",
+          title : "Building Nuclide From Source",
+          url : "/docs/advanced-topics/building-from-source/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/custom-keybindings/",
+          title : "Custom Keybindings",
+          url : "/docs/advanced-topics/custom-keybindings/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/linter-package-compatibility/",
+          title : "Linter Package Compatibility",
+          url : "/docs/advanced-topics/linter-package-compatibility/",
+        }
+        
+      ],
+    },
+    
+  ];
+</script>
+<script type="text/javascript">
+  var DocNav = React.createClass({displayName: "DocNav",
+    getInitialState: function() {
+      return {
+        toggleActive: false,
+      };
+    },
+    getDefaultProps: function() {
+      return {
+        currentDoc: "Debugger",
+        currentGroup: "",
+        data: docnavData,
+      }
+    },
+    handleSlide: function(id) {
+      this.setState({
+        toggleActive: !this.state.toggleActive,
+      });
+    },
+    render: function() {
+      var classes = React.addons.classSet({
+        'navToggle': true,
+        'navToggleActive': this.state.toggleActive,
+      });
+      var navClasses = React.addons.classSet({
+        'toggleNav': true,
+        'toggleNavActive': this.state.toggleActive,
+      });
+      return (
+        React.createElement("div", {className: navClasses},
+          React.createElement("section", null,
+            this.props.data.map(this.renderNavGroups)
+          ),
+          React.createElement("div", {className: classes, onClick: this.handleSlide}, React.createElement("i", null, this.state.toggleActive ? "◤" : "◢"))
+        )
+      );
+    },
+    renderNavGroups: function(child, index) {
+      var classes = React.addons.classSet({
+        'navGroup': true,
+        'navGroupActive': this.props.currentGroup === child.group,
+      });
+      return (
+        React.createElement("div", {className: classes, key: index},
+          React.createElement("h3", null, child.group),
+          React.createElement("ul", null,
+            child.items.map(this.renderNavItems)
+          )
+        )
+      );
+    },
+    renderNavItems: function(child, index) {
+      var itemClasses = React.addons.classSet({
+        'navListItem': true,
+        'navListItemActive': this.props.currentDoc === child.title,
+      });
+      var classes = React.addons.classSet({
+        'navItem': true,
+        'navItemActive': this.props.currentDoc === child.title,
+      });
+      return (
+        React.createElement("li", {className: itemClasses, key: index}, React.createElement("a", {className: classes, href: child.url},  child.title))
+      );
+    },
+  });
+
+  function docNavRender(docnavData) {
+    React.render(
+      React.createElement(DocNav, {data: docnavData}),
+      document.getElementById('doc_nav')
+    );
+  }
+  docNavRender(docnavData);
+</script>
+
+    <div class="post">
+  <header class="post-header">
+    <h1 class="post-title">Debugger</h1>
+  </header>
+
+  <article class="post-content">
+   
+      <p>One of the key features of Nuclide is its multiple-language debugging support provided with a debugger interface inspired by the familiar <a href="https://developer.chrome.com/devtools">Chrome DevTools</a>. The Nuclide Debugger provides many capabilities allowing you to have a productive debug loop, including inspection, watches, setting breakpoints, step in/over/out, etc.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#instantiation" id="markdown-toc-instantiation">Instantiation</a></li>
+  <li><a href="#basics" id="markdown-toc-basics">Basics</a>    <ul>
+      <li><a href="#debuggable-target" id="markdown-toc-debuggable-target">Debuggable Target</a></li>
+      <li><a href="#breakpoints" id="markdown-toc-breakpoints">Breakpoints</a></li>
+      <li><a href="#debugger" id="markdown-toc-debugger">Debugger</a></li>
+      <li><a href="#stepping" id="markdown-toc-stepping">Stepping</a></li>
+      <li><a href="#evaluation" id="markdown-toc-evaluation">Evaluation</a></li>
+    </ul>
+  </li>
+  <li><a href="#language-specific-debugging" id="markdown-toc-language-specific-debugging">Language Specific Debugging</a></li>
+  <li><a href="#platform-specific-debugging" id="markdown-toc-platform-specific-debugging">Platform Specific Debugging</a></li>
+</ul>
+
+<h2 id="instantiation">Instantiation</h2>
+
+<p>Attach to a running debug target via <code class="highlighter-rouge">Cmd-Shift-A</code> (<code class="highlighter-rouge">Ctrl-Shift-A</code> on Linux and Windows). You can also
+toggle the Debugger through the <a href="/docs/editor/basics/#command-palette">Command Palette</a> and the
+<a href="/docs/features/toolbar/#buttons">Nuclide toolbar</a>’s <strong>Toggle Debugger</strong> icon. You can also launch a new target with the debugger
+attached via <code class="highlighter-rouge">Cmd-F8</code> (<code class="highlighter-rouge">Ctrl-F8</code> on Linux and Windows).</p>
+
+<p>You can also bring up the Debugger panel by choosing <code class="highlighter-rouge">Debugger -&gt; Show</code> from the Nuclide menu.</p>
+
+<h2 id="basics">Basics</h2>
+
+<p>Nuclide supports debugging for multiple <a href="#language-specific-debugging">languages</a> and
+<a href="#platform-specific-debugging">platforms</a>. However, there are some basic debugging concepts that apply across all languages.</p>
+
+<h3 id="debuggable-target">Debuggable Target</h3>
+
+<p>Specific details are provided for each <a href="#language-specific-debugging">language</a> or
+<a href="#platform-specific-debugging">platform</a>, but in general, to begin debugging code in Nuclide, you
+need to either launch a debug process from within Nuclide (e.g., iOS from the Buck toolbar) or
+attach to a currently running process for debugging.</p>
+
+<p>After attaching to the process by clicking <strong>Attach</strong>, you should see the Debugger Controls to the right of the <a href="/docs/editor/basics/#editing-area">Editing Area</a>.</p>
+
+<p><img src="/static/images/docs/feature-debugger-target-attach.png" alt="" /></p>
+
+<h3 id="breakpoints">Breakpoints</h3>
+
+<p>To set a breakpoint in Nuclide, you use the <a href="/docs/editor/basics#gutter">gutter</a>. Click to the left
+of each line number in the file(s) in which you want Nuclide to break the running program. Then
+as the program is running, if a line on which a breakpoint is set is hit, the program halts, and you
+are able to perform debugging tasks such as <a href="#basics__stepping">step</a> and
+<a href="#basics__evaluation">evaluation</a> from that point.</p>
+
+<blockquote>
+  <p>There is currently only one type of breakpoint called a <em>source breakpoint</em>. This is a breakpoint
+on one line of code. We are looking into ways to support functional, conditional, and other types
+of breakpoints.</p>
+</blockquote>
+
+<h3 id="debugger">Debugger</h3>
+
+<p>The Debugger Controls are the information control center for the Nuclide Debugger.</p>
+
+<p>In addition to the specialized areas described below, it also provides mouse-clickable execution,
+<a href="#basics__stepping">stepping</a>, and breakpoint options.</p>
+
+<p><strong><em>Call Stack</em></strong></p>
+
+<p>The <strong>Call Stack</strong> area shows you where you came from to get to your current point in the code. The
+top function is where you currently are, the function below the top is the one that called the
+current function, and so on. Clicking on any function in the call stack will change the scope
+information so that it is relevant to that function.</p>
+
+<p><strong><em>Breakpoints</em></strong></p>
+
+<p>The <strong>Breakpoints</strong> area shows you all the places in your project where you have breakpoints set. If
+any are highlighted, that means that you have now hit that breakpoint while running the code. Clicking on a breakpoint in this list will move your cursor to its line of code in the Editing Area.  You can deactivate/reactive breakpoints by clicking the checkmark next to each one.  Right-clicking in the area will give you the option to quickly remove, enable, or disable all breakpoints at once.</p>
+
+<p><img src="/static/images/docs/feature-debugger-basics-breakpoint-menu.png" align="middle" style="width: 250px" /></p>
+
+<p><strong><em>Unresolved Breakpoints</em></strong></p>
+
+<p>These are breakpoints that cannot be resolved by the debugger. The most likely cause of an
+unresolved breakpoint is putting a breakpoint on code that is not part of the project on which the
+debugger process is attached. For some languages, this can also indicate that the program was built without debug symbols (check
+ your compiler flags!), or that the symbols are missing or do not match the binary being debugged.</p>
+
+<p><strong><em>Scopes</em></strong></p>
+
+<p>The <strong>Scopes</strong> pane shows you information about variables based upon the current point in the running of the code. Which scopes are visible
+depends on the language being debugged.</p>
+
+<p><strong><em>Watch Expressions</em></strong></p>
+
+<p>The <strong>Watch Expressions</strong> area is for you to keep track of the values of global and local variables. To add a new value to track, enter it in the <code class="highlighter-rouge">add new watch expression</code> text box. To remove a watched variable, click the <code class="highlighter-rouge">x</code> icon of the variable you wish to delete.</p>
+
+<p><strong><em>Detaching</em></strong></p>
+
+<p>You can detach the debugger from the current process by clicking “X” to close the debugger controls pane, or by clicking the “stop” button.
+This will stop the entire debugging session for that process, but will not kill the target.</p>
+
+<h3 id="stepping">Stepping</h3>
+
+<p>It is essential for any debugger to have a mechanism to step into, over, and out of code. The
+Nuclide Debugger provides stepping functionality with shortcuts within the Debugger itself and
+via the <a href="/docs/editor/keyboard-shortcuts/#debugger">keyboard</a>.</p>
+
+<p><img src="/static/images/docs/feature-debugger-stepping-controls.png" alt="" /></p>
+
+<h3 id="evaluation">Evaluation</h3>
+
+<p>The Nuclide Debugger supports
+<a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a> via the <strong>Console</strong> tab.</p>
+
+<p>When you hit a breakpoint during your debugging session, you can use the Console to write
+expressions, call functions, etc. using the current state of the program at the breakpoint.</p>
+
+<blockquote>
+  <p>For Hack and PHP debugging, hitting a breakpoint is not necessary to use the REPL support of
+the Nuclide Debugger. If you do not hit a breakpoint, then REPL is run in the global context as
+opposed to the current stack frame if a breakpoint is hit.</p>
+</blockquote>
+
+<blockquote>
+  <p>For LLDB-based debugging, REPL runs LLDB debugger commands as opposed to evaluating code in the
+Debugger.</p>
+</blockquote>
+
+<p><em>Example</em></p>
+
+<p>Here we have a breakpoint before printing out the sum of the two global variables <code class="highlighter-rouge">num1</code> and <code class="highlighter-rouge">num2</code>.
+This shows printing out the values of the global and local variables, writing simple expressions,
+calling a function in another module (<code class="highlighter-rouge">math.add()</code>), and inspecting objects.</p>
+
+<p><img src="/static/images/docs/feature-debugger-evaluation-ex.png" alt="" /></p>
+
+<h2 id="language-specific-debugging">Language Specific Debugging</h2>
+
+<p>While the <a href="#basics">general process</a> for debugging in Nuclide is similar, there are platform and
+language specific debugging workflows that require discussion and illustration.</p>
+
+<ul>
+  <li><a href="/docs/languages/hack/#debugging">Hack and PHP</a></li>
+  <li><a href="/docs/languages/cpp/#debugging">C++</a></li>
+  <li><a href="/docs/languages/objective-c/#debugging">Objective-C</a></li>
+</ul>
+
+<h2 id="platform-specific-debugging">Platform Specific Debugging</h2>
+
+<ul>
+  <li><a href="/docs/platforms/ios/#debugging">iOS</a></li>
+  <li><a href="/docs/platforms/android/#debugging">Android</a></li>
+  <li><a href="/docs/platforms/react-native/#debugging">React Native</a></li>
+</ul>
+
+<p>Buck projects can be more easily debugged via the <a href="/docs/features/task-runner/#buck">Task Runner</a>.</p>
+
+    
+  </article>
+  
+</div>
+
+
+  </div>
+</div>
+
+    <div class="footerContainer">
+  <div id="footer_wrap" class="wrapper footerWrapper">
+    <section id="fb_oss" class="fbOpenSourceFooter">
+      <a href="https://code.facebook.com/projects/" target="_blank"><img src="/static/oss_logo.png" alt="Facebook Open Source" title="Facebook Open Source" /></a>
+    </section>
+  </div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44373548-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="/js/jekyll-link-anchors.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript" src="/js/docsearch.js"></script>
+<script type="text/javascript" src="/js/get-required-versions.js"></script>
+
+  </body>
+
+</html>

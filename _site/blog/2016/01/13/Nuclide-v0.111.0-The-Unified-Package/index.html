@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.1.0 -->
+<title>Nuclide v0.111.0: The Unified Package - Nuclide</title>
+<meta property="og:title" content="Nuclide v0.111.0: The Unified Package" />
+<meta name="description" content="This is a significant release for Nuclide that is mainly aimed at improving and simplifying Nuclide as an open source project. The most apparent and important change is moving Nuclide from many Atom packages—44 of them to be exact—to just one: nuclide. We will discuss below why we are excited about moving to a single package and how it improves Nuclide for everyone, but first we will cover how to get going with the new release." />
+<meta property="og:description" content="This is a significant release for Nuclide that is mainly aimed at improving and simplifying Nuclide as an open source project. The most apparent and important change is moving Nuclide from many Atom packages—44 of them to be exact—to just one: nuclide. We will discuss below why we are excited about moving to a single package and how it improves Nuclide for everyone, but first we will cover how to get going with the new release." />
+<link rel="canonical" href="http://localhost:4000/blog/2016/01/13/Nuclide-v0.111.0-The-Unified-Package/" />
+<meta property="og:url" content="http://localhost:4000/blog/2016/01/13/Nuclide-v0.111.0-The-Unified-Package/" />
+<meta property="og:site_name" content="Nuclide" />
+<meta property="og:image" content="http://localhost:4000/static/og_image.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-01-13T00:00:00-08:00" />
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "BlogPosting",
+"headline": "Nuclide v0.111.0: The Unified Package",
+"image": "http://localhost:4000/static/og_image.png",
+"datePublished": "2016-01-13T00:00:00-08:00",
+"description": "This is a significant release for Nuclide that is mainly aimed at improving and simplifying Nuclide as an open source project. The most apparent and important change is moving Nuclide from many Atom packages—44 of them to be exact—to just one: nuclide. We will discuss below why we are excited about moving to a single package and how it improves Nuclide for everyone, but first we will cover how to get going with the new release.",
+"publisher": {"@type": "Organization",
+"logo": {"@type": "ImageObject",
+"url": "http://localhost:4000/static/og_image.png"}},
+"url": "http://localhost:4000/blog/2016/01/13/Nuclide-v0.111.0-The-Unified-Package/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+
+  
+  <link rel="stylesheet" href="/static/fonts/332720/BC699FA675F9356E3.css" media="screen">
+  <link rel="stylesheet" href="/css/main.css" media="screen">
+  <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+
+  
+  <script src="https://unpkg.com/react@0.13.1/dist/react-with-addons.min.js"></script>
+
+  
+
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Nuclide" />
+</head>
+
+  <body>
+    <div id="headerBar" class="headerBarContainer  visible">
+  <header>
+    <a href="http://localhost:4000/">
+      <img src="/static/logo_nav.png" height="30" width="25" alt="">
+      <h2>Nuclide</h2>
+    </a>
+    <div class="navigationWrapper navigationFull" id="flat_nav">
+      <nav class="navigation">
+        <ul>
+          
+            <li class="navItem">
+              
+                <a href="/docs/">Docs</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/blog/">Blog</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/support/">Support</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="https://github.com/facebook/nuclide">GitHub</a>
+              
+            </li>
+          
+          <li class="algolia-search-wrapper">
+            <input id="algolia-doc-search" type="search" placeholder="Search docs..." />
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navigationWrapper navigationSlider" id="navigation_wrap"></div>
+  </header>
+  <script>
+    var event = document.createEvent('Event');
+    event.initEvent('slide', true, true);
+    document.addEventListener('slide', function (e) {
+      document.body.classList.toggle('sliderActive');
+    }, false);
+    var navData = [
+      
+      {
+        href       : "/docs/",
+        text       : "Docs",
+      },
+      
+      {
+        href       : "/blog/",
+        text       : "Blog",
+      },
+      
+      {
+        href       : "/support/",
+        text       : "Support",
+      },
+      
+      {
+        href       : "https://github.com/facebook/nuclide",
+        text       : "GitHub",
+      },
+      
+    ];
+  </script>
+  <script type="text/javascript">
+    var Nav = React.createClass({displayName: "Nav",
+      getInitialState: function() {
+        return {
+          currentPath: document.location.pathname,
+          slideoutActive: false,
+        };
+      },
+      getDefaultProps: function() {
+        return {
+          data: navData,
+        }
+      },
+      handleClick: function(id) {
+        this.setState({
+          slideoutActive: false,
+        });
+      },
+      handleSlide: function(id) {
+        this.setState({
+          slideoutActive: !this.state.slideoutActive,
+        });
+      },
+      render: function() {
+        var classes = React.addons.classSet({
+          'navSlideout': true,
+          'navSlideoutActive': this.state.slideoutActive,
+        });
+        var navClasses = React.addons.classSet({
+          'slidingNav': true,
+          'slidingNavActive': this.state.slideoutActive,
+        });
+        return (
+          React.createElement("div", null,
+            React.createElement("div", {className: classes, onClick: this.handleSlide},
+              React.createElement("i", null, "☰")
+            ),
+            React.createElement("nav", {className: navClasses},
+              React.createElement("ul", null,
+                this.props.data.map(this.renderNavItems)
+              )
+            )
+          )
+        );
+      },
+      renderNavItems: function(child, index) {
+        var classes = React.addons.classSet({
+          'navItem': true,
+          'navItemActive': this.state.currentPath === child.href,
+        });
+        return (
+          React.createElement("li", {key: index, className: classes},
+            React.createElement("a", {onClick: this.handleClick, href: child.href}, child.text)
+          )
+        );
+      },
+    });
+
+    function render(navData) {
+      React.render(
+        React.createElement(Nav, {data: navData}),
+        document.getElementById('navigation_wrap')
+      );
+    }
+    render(navData);
+  </script>
+</div>
+
+    <div class="mainContainer blogContainer postContainer">
+  <div id="main_wrap" class="wrapper mainWrapper">
+    <nav class='toc' id="blog_nav"></nav>
+<script>
+  
+  var blognavData = [
+    
+    {
+      key : "/blog/2017/09/12/Introducing-Atom-IDE-UI/",
+      title : "Introducing Atom IDE UI",
+      url : "/blog/2017/09/12/Introducing-Atom-IDE-UI/"
+    },
+    
+    {
+      key : "/blog/2017/08/31/Code-Search/",
+      title : "Code Search",
+      url : "/blog/2017/08/31/Code-Search/"
+    },
+    
+    {
+      key : "/blog/2017/02/27/Command-Click-You-Have-One-Job/",
+      title : "Command + Click: You Have One Job",
+      url : "/blog/2017/02/27/Command-Click-You-Have-One-Job/"
+    },
+    
+    {
+      key : "/blog/2016/01/13/Nuclide-v0.111.0-The-Unified-Package/",
+      title : "Nuclide v0.111.0: The Unified Package",
+      url : "/blog/2016/01/13/Nuclide-v0.111.0-The-Unified-Package/"
+    },
+    
+    {
+      key : "all-posts",
+      title : "All Posts …",
+      url : "/blog/all/",
+    }
+  ];
+</script>
+<script>
+var BlogNav = React.createClass({displayName: "BlogNav",
+  getInitialState: function() {
+    return {
+      toggleActive: false,
+    };
+  },
+  getDefaultProps: function() {
+    return {
+      currentDoc: "Nuclide v0.111.0: The Unified Package",
+      data: blognavData,
+    }
+  },
+  handleSlide: function(id) {
+    this.setState({
+      toggleActive: !this.state.toggleActive,
+    });
+  },
+  render: function() {
+    var classes = React.addons.classSet({
+      'navToggle': true,
+      'navToggleActive': this.state.toggleActive,
+    });
+    var navClasses = React.addons.classSet({
+      'toggleNav': true,
+      'toggleNavActive': this.state.toggleActive,
+    });
+    return (
+      React.createElement("div", {className: navClasses},
+        React.createElement("section", null,
+          React.createElement("h3", null, "Recent Posts"),
+          React.createElement("ul", null,
+            this.props.data.map(this.renderNavItems)
+          )
+        ),
+        React.createElement("div",
+          {className: classes, onClick: this.handleSlide},
+          React.createElement("i", null, this.state.toggleActive ? "◤" : "◢")
+        )
+      )
+    );
+  },
+  renderNavItems: function(child, index) {
+    var itemClasses = React.addons.classSet({
+      'navListItem': true,
+      'navListItemActive': this.props.currentDoc === child.title,
+    });
+    var classes = React.addons.classSet({
+      'navItem': true,
+      'navItemActive': this.props.currentDoc === child.title,
+    });
+    return (
+      React.createElement("li", {className: itemClasses, key: index},
+        React.createElement("a", {className: classes, href: child.url},  child.title)
+      )
+    );
+  },
+});
+
+function blogNavRender(blognavData) {
+  React.render(
+    React.createElement(BlogNav, {data: blognavData}),
+    document.getElementById('blog_nav')
+  );
+}
+blogNavRender(blognavData);
+</script>
+
+    <div class="post">
+  
+  <header class="post-header">
+    
+    <div class="authorPhoto">
+      <a href="https://facebook.com/18700343" target="_blank"><img src="http://graph.facebook.com/18700343/picture/" alt="" title="" /></a>
+    </div>
+    
+    
+    <p class="post-authorName">Andres Suarez</p>
+    
+    <h1 class="post-title">Nuclide v0.111.0: The Unified Package</h1>
+    <p class="post-meta">Posted January 13, 2016</p>
+  </header>
+
+  <article class="post-content">
+    <p>This is a significant release for Nuclide that is mainly aimed at improving and simplifying Nuclide as an open source project. The most apparent and important change is moving Nuclide from many Atom
+packages—44 of them to be exact—to just one: <code class="highlighter-rouge">nuclide</code>. We will discuss below why we are excited
+about moving to a single package and how it improves Nuclide for everyone, but first we will cover
+how to get going with the new release.</p>
+
+<h2 id="installing-nuclide-v01110">Installing Nuclide v0.111.0</h2>
+
+<p>Nuclide v0.111.0 is a single Atom package. To install it, you can either search for the
+<a href="https://atom.io/packages/nuclide">‘nuclide’ Atom package</a> in <em>Atom &gt; Packages &gt; Install</em> or install
+it from the command line with <code class="highlighter-rouge">apm</code>. While this release focuses on moving to a single package, it
+does include fixes and improvements that you can find in the
+<a href="https://github.com/facebook/nuclide/blob/v0.111.0/CHANGELOG.md">CHANGELOG.md</a>.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>apm install nuclide
+</code></pre>
+</div>
+
+<h4 id="installing-nuclide-server-v01110">Installing Nuclide Server v0.111.0</h4>
+
+<p>Nuclide’s server has moved into the <a href="https://www.npmjs.com/package/nuclide">‘nuclide’ NPM package</a>.
+The server is required only if you intend to edit remote files from within Atom+Nuclide, and it
+should be installed on the host where the remote files live. We recommend installing the server as
+a global module using NPM’s <code class="highlighter-rouge">-g</code> flag so its binaries are available in ‘/usr/local/bin’.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>npm install -g nuclide
+</code></pre>
+</div>
+
+<h3 id="new-version-scheme">New Version Scheme</h3>
+
+<p>The last version of the Nuclide packages that were published was v0.0.35. Internally, however, the
+server was last released as v0.108.0. This release adopts our internal version scheme so the
+versions stay in sync with open source releases.</p>
+
+<h3 id="migrating-from-previous-versions">Migrating from Previous Versions</h3>
+
+<p>If you previously installed Nuclide via the <code class="highlighter-rouge">nuclide-installer</code> package or by installing <code class="highlighter-rouge">nuclide-</code>
+packages individually, you should uninstall them first. Follow the
+<a href="/docs/editor/uninstall/#v0-0-35-and-prior">v0.0.35 uninstall instructions</a> to ensure previous
+versions of Nuclide are removed.</p>
+
+<p>The new ‘nuclide’ package will automatically disable any deprecated ‘nuclide-*’ packages and warn
+you on start up that you should uninstall them to ensure everything works as expected.</p>
+
+<h2 id="configuring-single-package-nuclide">Configuring Single-package Nuclide</h2>
+
+<p>Because Nuclide is now a single Atom Package, its settings are unified under the ‘nuclide’ package
+in <em>Atom &gt; Packages &gt; nuclide &gt; Settings</em>.</p>
+
+<p><img src="/static/images/blog/nuclide-atom-settings.png" alt="" /></p>
+
+<p>Features you may have been familiar with as separate packages before, such as Hyperclick,
+Diagnostics, and File Tree, are now listed as features in Nuclide’s Settings page and are togglable
+as if they were Atom packages. If you want to use only one or a few of the features of Nuclide, you
+can disable the rest of Nuclide without incurring any load time for the disabled features’ code. All
+features are enabled by default.</p>
+
+<p><img src="/static/images/blog/nuclide-feature-settings.png" alt="" /></p>
+
+<h3 id="migrating-settings-from-previous-packages">Migrating Settings from Previous Packages</h3>
+
+<p>If you changed settings in any of Nuclide’s previous packages, the settings will be automatically
+migrated to their new location in the <code class="highlighter-rouge">nuclide.</code> namespace when you first launch Atom after
+installing the ‘nuclide’ package. The settings will be configurable like before but under the
+<em>Atom &gt; Packages &gt; nuclide &gt; Settings</em> rather than under the package’s name.</p>
+
+<h2 id="why-a-single-atom-package">Why a Single Atom Package?</h2>
+
+<p>The Atom ecosystem is centered around modular packages that can be installed and updated
+independently, and Nuclide took that same approach from the start. We wrote scripts to let our code
+live in a single repository but be released as many Atom packages. Nuclide releases were actually
+simultaneous releases of 40+ Atom packages. While this fit well with the Atom model, it meant we
+also had to distribute a “installer” package that oversaw the installation of top-level Atom
+packages.</p>
+
+<p>In practice, the installer process was computationally expensive, difficult to
+troubleshoot, and took roughly 40 minutes partially due to large amounts of network traffic. When
+all Nuclide packages were installed, they filled over 3GB of disk space. Nuclide packages are
+heavily interdependent, and because they were installed as top-level Atom packages they each had
+their own ‘node_modules’ directory with largely duplicate dependencies.</p>
+
+<p>By unifying Nuclide into a single Atom package, we aimed to improve installation, updates, and
+maintenance. The single ‘nuclide’ package does not require a special installer, only <code class="highlighter-rouge">apm install</code>
+like other Atom packages. This simplifies installation for everyone and makes Nuclide updates fast.
+Once installed, the ‘nuclide’ package takes under 110MB of disk space, a 95%+ reduction in disk use,
+and subsequently, network use during installation. The dramatic drop in disk use was possible
+because Nuclide’s features now share a single ‘node_modules’ directory and use relative paths to
+require one another, eliminating the duplicate dependencies present when Nuclide was 40+ top-level
+Atom packages.</p>
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>We are excited to greatly improve the experience of Nuclide for users outside Facebook. This release
+should solve many of the most common installation and upgrade issues that have been reported, and it
+paves the way for more frequent and more stable releases. We hope that simplifying the installation
+process will make <a href="https://github.com/facebook/nuclide">Nuclide’s source</a> more familiar to other
+Atom developers and make it easier for anyone to contribute.</p>
+
+<p>If you run into issues with the upgrade process, or if you run into any issue at all, open a
+<a href="https://github.com/facebook/nuclide/issues">Nuclide GitHub issue</a> so we can help out.</p>
+
+    
+      <div class="pluginBlock allShareBlock">
+  <div class="fb-like pluginBlock" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<script>
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '',
+    xfbml      : true,
+    version    : 'v2.3'
+  });
+  };
+
+  (function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/en_US/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+</div>
+
+    
+  </article>
+</div>
+
+
+  </div>
+</div>
+
+    <div class="footerContainer">
+  <div id="footer_wrap" class="wrapper footerWrapper">
+    <section id="fb_oss" class="fbOpenSourceFooter">
+      <a href="https://code.facebook.com/projects/" target="_blank"><img src="/static/oss_logo.png" alt="Facebook Open Source" title="Facebook Open Source" /></a>
+    </section>
+  </div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44373548-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="/js/jekyll-link-anchors.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript" src="/js/docsearch.js"></script>
+<script type="text/javascript" src="/js/get-required-versions.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.1.0 -->
+<title>Flow - Nuclide</title>
+<meta property="og:title" content="Flow" />
+<meta name="description" content="Nuclide has deep, built-in support for Flow-enabled JavaScript." />
+<meta property="og:description" content="Nuclide has deep, built-in support for Flow-enabled JavaScript." />
+<link rel="canonical" href="http://localhost:4000/docs/languages/flow/" />
+<meta property="og:url" content="http://localhost:4000/docs/languages/flow/" />
+<meta property="og:site_name" content="Nuclide" />
+<meta property="og:image" content="http://localhost:4000/static/og_image.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-18T17:06:10-07:00" />
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "BlogPosting",
+"headline": "Flow",
+"image": "http://localhost:4000/static/og_image.png",
+"datePublished": "2018-03-18T17:06:10-07:00",
+"description": "Nuclide has deep, built-in support for Flow-enabled JavaScript.",
+"publisher": {"@type": "Organization",
+"logo": {"@type": "ImageObject",
+"url": "http://localhost:4000/static/og_image.png"}},
+"url": "http://localhost:4000/docs/languages/flow/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+
+  
+  <link rel="stylesheet" href="/static/fonts/332720/BC699FA675F9356E3.css" media="screen">
+  <link rel="stylesheet" href="/css/main.css" media="screen">
+  <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+
+  
+  <script src="https://unpkg.com/react@0.13.1/dist/react-with-addons.min.js"></script>
+
+  
+
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Nuclide" />
+</head>
+
+  <body>
+    <div id="headerBar" class="headerBarContainer  visible">
+  <header>
+    <a href="http://localhost:4000/">
+      <img src="/static/logo_nav.png" height="30" width="25" alt="">
+      <h2>Nuclide</h2>
+    </a>
+    <div class="navigationWrapper navigationFull" id="flat_nav">
+      <nav class="navigation">
+        <ul>
+          
+            <li class="navItem navItemActive">
+              
+                <a href="/docs/">Docs</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/blog/">Blog</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/support/">Support</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="https://github.com/facebook/nuclide">GitHub</a>
+              
+            </li>
+          
+          <li class="algolia-search-wrapper">
+            <input id="algolia-doc-search" type="search" placeholder="Search docs..." />
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navigationWrapper navigationSlider" id="navigation_wrap"></div>
+  </header>
+  <script>
+    var event = document.createEvent('Event');
+    event.initEvent('slide', true, true);
+    document.addEventListener('slide', function (e) {
+      document.body.classList.toggle('sliderActive');
+    }, false);
+    var navData = [
+      
+      {
+        href       : "/docs/",
+        text       : "Docs",
+      },
+      
+      {
+        href       : "/blog/",
+        text       : "Blog",
+      },
+      
+      {
+        href       : "/support/",
+        text       : "Support",
+      },
+      
+      {
+        href       : "https://github.com/facebook/nuclide",
+        text       : "GitHub",
+      },
+      
+    ];
+  </script>
+  <script type="text/javascript">
+    var Nav = React.createClass({displayName: "Nav",
+      getInitialState: function() {
+        return {
+          currentPath: document.location.pathname,
+          slideoutActive: false,
+        };
+      },
+      getDefaultProps: function() {
+        return {
+          data: navData,
+        }
+      },
+      handleClick: function(id) {
+        this.setState({
+          slideoutActive: false,
+        });
+      },
+      handleSlide: function(id) {
+        this.setState({
+          slideoutActive: !this.state.slideoutActive,
+        });
+      },
+      render: function() {
+        var classes = React.addons.classSet({
+          'navSlideout': true,
+          'navSlideoutActive': this.state.slideoutActive,
+        });
+        var navClasses = React.addons.classSet({
+          'slidingNav': true,
+          'slidingNavActive': this.state.slideoutActive,
+        });
+        return (
+          React.createElement("div", null,
+            React.createElement("div", {className: classes, onClick: this.handleSlide},
+              React.createElement("i", null, "☰")
+            ),
+            React.createElement("nav", {className: navClasses},
+              React.createElement("ul", null,
+                this.props.data.map(this.renderNavItems)
+              )
+            )
+          )
+        );
+      },
+      renderNavItems: function(child, index) {
+        var classes = React.addons.classSet({
+          'navItem': true,
+          'navItemActive': this.state.currentPath === child.href,
+        });
+        return (
+          React.createElement("li", {key: index, className: classes},
+            React.createElement("a", {onClick: this.handleClick, href: child.href}, child.text)
+          )
+        );
+      },
+    });
+
+    function render(navData) {
+      React.render(
+        React.createElement(Nav, {data: navData}),
+        document.getElementById('navigation_wrap')
+      );
+    }
+    render(navData);
+  </script>
+</div>
+
+    <div class="mainContainer blogContainer postContainer">
+  <div id="main_wrap" class="wrapper mainWrapper">
+    <nav class="toc" id="doc_nav"></nav>
+<script>
+  var docnavData = [
+    
+    {
+      group     : "Quick Start",
+      items     : [
+        
+        
+        {
+          key : "/docs/quick-start/getting-started/",
+          title : "Getting Started",
+          url : "/docs/quick-start/getting-started/",
+        },
+        
+        
+        {
+          key : "/docs/editor/basics/",
+          title : "Basics",
+          url : "/docs/editor/basics/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "About",
+      items     : [
+        
+        
+        {
+          key : "/docs/editor/setup/",
+          title : "Setup",
+          url : "/docs/editor/setup/",
+        },
+        
+        
+        {
+          key : "/docs/editor/keyboard-shortcuts/",
+          title : "Keyboard Shortcuts",
+          url : "/docs/editor/keyboard-shortcuts/",
+        },
+        
+        
+        {
+          key : "/docs/editor/uninstall/",
+          title : "Uninstalling",
+          url : "/docs/editor/uninstall/",
+        },
+        
+        
+        {
+          key : "/docs/help/faq/",
+          title : "FAQ",
+          url : "/docs/help/faq/",
+        },
+        
+        
+        {
+          key : "/docs/help/troubleshooting/",
+          title : "Troubleshooting",
+          url : "/docs/help/troubleshooting/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Feature Guides",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/remote/",
+          title : "Remote Development",
+          url : "/docs/features/remote/",
+        },
+        
+        
+        {
+          key : "/docs/features/debugger/",
+          title : "Debugger",
+          url : "/docs/features/debugger/",
+        },
+        
+        
+        {
+          key : "/docs/features/task-runner/",
+          title : "Task Runner",
+          url : "/docs/features/task-runner/",
+        },
+        
+        
+        {
+          key : "/docs/features/quick-open/",
+          title : "Quick Open",
+          url : "/docs/features/quick-open/",
+        },
+        
+        
+        {
+          key : "/docs/features/working-sets/",
+          title : "Working Sets",
+          url : "/docs/features/working-sets/",
+        },
+        
+        
+        {
+          key : "/docs/features/outline-view/",
+          title : "Outline",
+          url : "/docs/features/outline-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/context-view/",
+          title : "Context View",
+          url : "/docs/features/context-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/health-statistics/",
+          title : "Health Statistics",
+          url : "/docs/features/health-statistics/",
+        },
+        
+        
+        {
+          key : "/docs/features/terminal/",
+          title : "Integrated Terminal",
+          url : "/docs/features/terminal/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Plugins",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/hg/",
+          title : "Mercurial Support",
+          url : "/docs/features/hg/",
+        },
+        
+        
+        {
+          key : "/docs/features/toolbar/",
+          title : "Toolbar",
+          url : "/docs/features/toolbar/",
+        },
+        
+        
+        {
+          key : "/docs/features/buck/",
+          title : "Buck",
+          url : "/docs/features/buck/",
+        },
+        
+        
+        {
+          key : "/docs/features/format-js/",
+          title : "Format JS",
+          url : "/docs/features/format-js/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Languages",
+      items     : [
+        
+        
+        {
+          key : "/docs/languages/hack/",
+          title : "Hack",
+          url : "/docs/languages/hack/",
+        },
+        
+        
+        {
+          key : "/docs/languages/flow/",
+          title : "Flow",
+          url : "/docs/languages/flow/",
+        },
+        
+        
+        {
+          key : "/docs/languages/objective-c/",
+          title : "Objective-C",
+          url : "/docs/languages/objective-c/",
+        },
+        
+        
+        {
+          key : "/docs/languages/cpp/",
+          title : "C++",
+          url : "/docs/languages/cpp/",
+        },
+        
+        
+        {
+          key : "/docs/languages/python/",
+          title : "Python",
+          url : "/docs/languages/python/",
+        },
+        
+        
+        {
+          key : "/docs/languages/swift/",
+          title : "Swift",
+          url : "/docs/languages/swift/",
+        },
+        
+        
+        {
+          key : "/docs/languages/graphql/",
+          title : "GraphQL",
+          url : "/docs/languages/graphql/",
+        },
+        
+        
+        {
+          key : "/docs/languages/other/",
+          title : "PHP, JS, OCaml",
+          url : "/docs/languages/other/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Platforms",
+      items     : [
+        
+        
+        {
+          key : "/docs/platforms/ios/",
+          title : "iOS",
+          url : "/docs/platforms/ios/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/android/",
+          title : "Android",
+          url : "/docs/platforms/android/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/react-native/",
+          title : "React Native",
+          url : "/docs/platforms/react-native/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/web/",
+          title : "Web Development",
+          url : "/docs/platforms/web/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Advanced Topics",
+      items     : [
+        
+        
+        {
+          key : "/docs/advanced-topics/building-from-source/",
+          title : "Building Nuclide From Source",
+          url : "/docs/advanced-topics/building-from-source/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/custom-keybindings/",
+          title : "Custom Keybindings",
+          url : "/docs/advanced-topics/custom-keybindings/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/linter-package-compatibility/",
+          title : "Linter Package Compatibility",
+          url : "/docs/advanced-topics/linter-package-compatibility/",
+        }
+        
+      ],
+    },
+    
+  ];
+</script>
+<script type="text/javascript">
+  var DocNav = React.createClass({displayName: "DocNav",
+    getInitialState: function() {
+      return {
+        toggleActive: false,
+      };
+    },
+    getDefaultProps: function() {
+      return {
+        currentDoc: "Flow",
+        currentGroup: "",
+        data: docnavData,
+      }
+    },
+    handleSlide: function(id) {
+      this.setState({
+        toggleActive: !this.state.toggleActive,
+      });
+    },
+    render: function() {
+      var classes = React.addons.classSet({
+        'navToggle': true,
+        'navToggleActive': this.state.toggleActive,
+      });
+      var navClasses = React.addons.classSet({
+        'toggleNav': true,
+        'toggleNavActive': this.state.toggleActive,
+      });
+      return (
+        React.createElement("div", {className: navClasses},
+          React.createElement("section", null,
+            this.props.data.map(this.renderNavGroups)
+          ),
+          React.createElement("div", {className: classes, onClick: this.handleSlide}, React.createElement("i", null, this.state.toggleActive ? "◤" : "◢"))
+        )
+      );
+    },
+    renderNavGroups: function(child, index) {
+      var classes = React.addons.classSet({
+        'navGroup': true,
+        'navGroupActive': this.props.currentGroup === child.group,
+      });
+      return (
+        React.createElement("div", {className: classes, key: index},
+          React.createElement("h3", null, child.group),
+          React.createElement("ul", null,
+            child.items.map(this.renderNavItems)
+          )
+        )
+      );
+    },
+    renderNavItems: function(child, index) {
+      var itemClasses = React.addons.classSet({
+        'navListItem': true,
+        'navListItemActive': this.props.currentDoc === child.title,
+      });
+      var classes = React.addons.classSet({
+        'navItem': true,
+        'navItemActive': this.props.currentDoc === child.title,
+      });
+      return (
+        React.createElement("li", {className: itemClasses, key: index}, React.createElement("a", {className: classes, href: child.url},  child.title))
+      );
+    },
+  });
+
+  function docNavRender(docnavData) {
+    React.render(
+      React.createElement(DocNav, {data: docnavData}),
+      document.getElementById('doc_nav')
+    );
+  }
+  docNavRender(docnavData);
+</script>
+
+    <div class="post">
+  <header class="post-header">
+    <h1 class="post-title">Flow</h1>
+  </header>
+
+  <article class="post-content">
+   
+      <p>Nuclide has deep, built-in support for <a href="http://flowtype.org">Flow-enabled</a> JavaScript.</p>
+
+<blockquote>
+  <p>Flow recently became supported on Windows.  See the <a href="https://flowtype.org/blog/2016/08/01/Windows-Support.html">Windows is Supported!</a> Flow blog post for more information.</p>
+</blockquote>
+
+<p><br /></p>
+
+<ul id="markdown-toc">
+  <li><a href="#installing-flow" id="markdown-toc-installing-flow">Installing Flow</a></li>
+  <li><a href="#features" id="markdown-toc-features">Features</a>    <ul>
+      <li><a href="#code-diagnostics" id="markdown-toc-code-diagnostics">Code Diagnostics</a></li>
+      <li><a href="#autocomplete" id="markdown-toc-autocomplete">Autocomplete</a></li>
+      <li><a href="#jump-to-definition" id="markdown-toc-jump-to-definition">Jump To Definition</a></li>
+      <li><a href="#type-hinting" id="markdown-toc-type-hinting">Type Hinting</a></li>
+      <li><a href="#type-coverage" id="markdown-toc-type-coverage">Type Coverage</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="installing-flow">Installing Flow</h2>
+
+<p>In order to fully use the integration of Flow, you must have Flow installed on your system:</p>
+
+<ol>
+  <li><a href="http://flowtype.org/docs/getting-started.html#installing-flow">Install Flow</a>.</li>
+  <li>If you are new to Flow, <a href="http://flowtype.org/docs/five-simple-examples.html">five simple examples</a> can get you started writing Flow programs. The
+key items of note are:
+    <ul>
+      <li>The <code class="highlighter-rouge">flow</code> path is in your <code class="highlighter-rouge">$PATH</code> environment variable. If it is not in your <code class="highlighter-rouge">$PATH</code> environment variable for any reason, you can specify the
+path to the <code class="highlighter-rouge">flow</code> binary in <code class="highlighter-rouge">Settings | Packages | Nuclide | Settings | nuclide-flow: Path to Flow Executable</code>.</li>
+      <li>You have an empty <code class="highlighter-rouge">.flowconfig</code> file in the root of your project.</li>
+      <li>You have <code class="highlighter-rouge">/* @flow */</code> at the top of your JavaScript (<code class="highlighter-rouge">.js</code>) file.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="features">Features</h2>
+
+<p>Flow’s integration into Nuclide provides you with productivity features such as:</p>
+
+<ul>
+  <li><a href="#features__code-diagnostics">Code Diagnostics</a> (e.g., inline Flow errors)</li>
+  <li><a href="#features__autocomplete">Autocomplete</a></li>
+  <li><a href="#features__jump-to-definition">Jump to Definition</a></li>
+  <li><a href="#features__type-hinting">Inline (mouseover) type hinting</a></li>
+  <li><a href="#features__type-coverage">Inline type coverage</a></li>
+</ul>
+
+<blockquote>
+  <p>These features will not work properly unless you are working with Flow-enabled JavaScript since
+they require a <code class="highlighter-rouge">.flowconfig</code> file in your project root and the ability to run the Flow
+typechecker (e.g., <code class="highlighter-rouge">flow</code>) from the project root.</p>
+</blockquote>
+
+<h3 id="code-diagnostics">Code Diagnostics</h3>
+
+<p>If you write code that doesn’t pass the Flow typechecker, Nuclide will provide you error details in
+both its <a href="/docs/editor/basics/#status-bar__code-diagnostics">Code Diagnostics</a> pane and inline
+within the <a href="/docs/editor/basics/#editing-area">Editing Area</a>.</p>
+
+<p><img src="/static/images/docs/language-flow-code-diagnostics.png" alt="" /></p>
+
+<p>Hover over the sideways red triangle in the <a href="/docs/editor/basics/#gutter">gutter</a> to see the Flow
+error inline.</p>
+
+<p><img src="/static/images/docs/language-flow-code-diagnostics-gutter.png" alt="" /></p>
+
+<h3 id="autocomplete">Autocomplete</h3>
+<p>​​
+Given that Nuclide has access to all of the type information within your project along with the
+built-in types provided by Flow, autocomplete just works.</p>
+
+<p><img src="/static/images/docs/language-flow-autocomplete.png" alt="" /></p>
+
+<p>By default suggestions from Flow will be shown first in the list of autocomplete results.
+However if you don’t want this behavior (e.g. you want snippets to be on top),
+you can configure priority in Nuclide’s preferences.</p>
+
+<h3 id="jump-to-definition">Jump To Definition</h3>
+
+<p>Nuclide provides a jump to definition/symbol feature for Flow programs.</p>
+
+<p>For example, if you want to go to the definition of <code class="highlighter-rouge">arr_length()</code>, hover over
+<code class="highlighter-rouge">arr_length()</code>and either press <code class="highlighter-rouge">Cmd-&lt;mouse click&gt;</code> (<code class="highlighter-rouge">Ctrl-&lt;mouse click&gt;</code> on Linux) or
+<code class="highlighter-rouge">Cmd-Option-Enter</code> (<code class="highlighter-rouge">Ctrl-Alt-Enter</code> on Linux).</p>
+
+<p><img src="/static/images/docs/language-flow-jump-to-definition-link.png" alt="" /></p>
+
+<p><img src="/static/images/docs/language-flow-jump-to-definition-result.png" alt="" /></p>
+
+<h3 id="type-hinting">Type Hinting</h3>
+
+<p>If you hover over a variable in your Flow file, you can get the type of the variable directly
+inline.</p>
+
+<p><img src="/static/images/docs/language-flow-typehint.png" alt="" /></p>
+
+<p>In fact, you can even pin that type hint so that it always displays. Just click on the pin icon
+when hovering over a variable to pin it.</p>
+
+<p>​​<img src="/static/images/docs/language-flow-pinned-typehint.png" alt="" /></p>
+
+<p>The highlighted variables show that their type variables have been pinned. If you hover over the
+type hint, its associated variable will have motion in its highlight.</p>
+
+<p>Click the <code class="highlighter-rouge">x</code> icon of a pinned type hint to remove it.</p>
+
+<blockquote>
+  <p>Pinned type hints can be moved anywhere within the editor.</p>
+</blockquote>
+
+<h3 id="type-coverage">Type Coverage</h3>
+
+<p>Nuclide can show you how much of your Flow file is covered by the type system with Type Coverage.</p>
+
+<p><img src="/static/images/docs/language-flow-type-coverage.png" alt="" /></p>
+
+<p>If the percentage is less than 100%, you can toggle the Type Coverage inline display to show you where the issues are.</p>
+
+<p>From the <a href="/docs/editor/basics/#command-palette">Command Palette</a>, choose <code class="highlighter-rouge">Nuclide Type Coverage: Toggle Inline Display</code>. You can also either press <code class="highlighter-rouge">Ctrl-Option-Shift-V</code> (<code class="highlighter-rouge">Ctrl-Alt-Shift-V</code> on Linux) or simply click on the percentage displayed in the <a href="/docs/editor/basics/#status-bar">Status Bar</a>.</p>
+
+<p>Hover over any sideways triangles that appear in the gutter to see the type check issue inline, or open the <a href="/docs/editor/basics/#status-bar__code-diagnostics">Diagnostics Table</a> to see them all listed together.  Clicking on any issue in the Diagnostics Table will highlight the associated line.</p>
+
+<p><img src="/static/images/docs/language-flow-type-coverage-inline.png" alt="" /></p>
+
+    
+  </article>
+  
+</div>
+
+
+  </div>
+</div>
+
+    <div class="footerContainer">
+  <div id="footer_wrap" class="wrapper footerWrapper">
+    <section id="fb_oss" class="fbOpenSourceFooter">
+      <a href="https://code.facebook.com/projects/" target="_blank"><img src="/static/oss_logo.png" alt="Facebook Open Source" title="Facebook Open Source" /></a>
+    </section>
+  </div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44373548-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="/js/jekyll-link-anchors.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript" src="/js/docsearch.js"></script>
+<script type="text/javascript" src="/js/get-required-versions.js"></script>
+
+  </body>
+
+</html>

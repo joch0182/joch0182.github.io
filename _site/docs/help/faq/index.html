@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.1.0 -->
+<title>FAQ - Nuclide</title>
+<meta property="og:title" content="FAQ" />
+<meta name="description" content="Here is an ever-growing list of frequently asked questions around Nuclide." />
+<meta property="og:description" content="Here is an ever-growing list of frequently asked questions around Nuclide." />
+<link rel="canonical" href="http://localhost:4000/docs/help/faq/" />
+<meta property="og:url" content="http://localhost:4000/docs/help/faq/" />
+<meta property="og:site_name" content="Nuclide" />
+<meta property="og:image" content="http://localhost:4000/static/og_image.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-18T17:06:10-07:00" />
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "BlogPosting",
+"headline": "FAQ",
+"image": "http://localhost:4000/static/og_image.png",
+"datePublished": "2018-03-18T17:06:10-07:00",
+"description": "Here is an ever-growing list of frequently asked questions around Nuclide.",
+"publisher": {"@type": "Organization",
+"logo": {"@type": "ImageObject",
+"url": "http://localhost:4000/static/og_image.png"}},
+"url": "http://localhost:4000/docs/help/faq/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+
+  
+  <link rel="stylesheet" href="/static/fonts/332720/BC699FA675F9356E3.css" media="screen">
+  <link rel="stylesheet" href="/css/main.css" media="screen">
+  <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+
+  
+  <script src="https://unpkg.com/react@0.13.1/dist/react-with-addons.min.js"></script>
+
+  
+
+  
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Nuclide" />
+</head>
+
+  <body>
+    <div id="headerBar" class="headerBarContainer  visible">
+  <header>
+    <a href="http://localhost:4000/">
+      <img src="/static/logo_nav.png" height="30" width="25" alt="">
+      <h2>Nuclide</h2>
+    </a>
+    <div class="navigationWrapper navigationFull" id="flat_nav">
+      <nav class="navigation">
+        <ul>
+          
+            <li class="navItem navItemActive">
+              
+                <a href="/docs/">Docs</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/blog/">Blog</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="/support/">Support</a>
+              
+            </li>
+          
+            <li class="navItem">
+              
+                <a href="https://github.com/facebook/nuclide">GitHub</a>
+              
+            </li>
+          
+          <li class="algolia-search-wrapper">
+            <input id="algolia-doc-search" type="search" placeholder="Search docs..." />
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="navigationWrapper navigationSlider" id="navigation_wrap"></div>
+  </header>
+  <script>
+    var event = document.createEvent('Event');
+    event.initEvent('slide', true, true);
+    document.addEventListener('slide', function (e) {
+      document.body.classList.toggle('sliderActive');
+    }, false);
+    var navData = [
+      
+      {
+        href       : "/docs/",
+        text       : "Docs",
+      },
+      
+      {
+        href       : "/blog/",
+        text       : "Blog",
+      },
+      
+      {
+        href       : "/support/",
+        text       : "Support",
+      },
+      
+      {
+        href       : "https://github.com/facebook/nuclide",
+        text       : "GitHub",
+      },
+      
+    ];
+  </script>
+  <script type="text/javascript">
+    var Nav = React.createClass({displayName: "Nav",
+      getInitialState: function() {
+        return {
+          currentPath: document.location.pathname,
+          slideoutActive: false,
+        };
+      },
+      getDefaultProps: function() {
+        return {
+          data: navData,
+        }
+      },
+      handleClick: function(id) {
+        this.setState({
+          slideoutActive: false,
+        });
+      },
+      handleSlide: function(id) {
+        this.setState({
+          slideoutActive: !this.state.slideoutActive,
+        });
+      },
+      render: function() {
+        var classes = React.addons.classSet({
+          'navSlideout': true,
+          'navSlideoutActive': this.state.slideoutActive,
+        });
+        var navClasses = React.addons.classSet({
+          'slidingNav': true,
+          'slidingNavActive': this.state.slideoutActive,
+        });
+        return (
+          React.createElement("div", null,
+            React.createElement("div", {className: classes, onClick: this.handleSlide},
+              React.createElement("i", null, "☰")
+            ),
+            React.createElement("nav", {className: navClasses},
+              React.createElement("ul", null,
+                this.props.data.map(this.renderNavItems)
+              )
+            )
+          )
+        );
+      },
+      renderNavItems: function(child, index) {
+        var classes = React.addons.classSet({
+          'navItem': true,
+          'navItemActive': this.state.currentPath === child.href,
+        });
+        return (
+          React.createElement("li", {key: index, className: classes},
+            React.createElement("a", {onClick: this.handleClick, href: child.href}, child.text)
+          )
+        );
+      },
+    });
+
+    function render(navData) {
+      React.render(
+        React.createElement(Nav, {data: navData}),
+        document.getElementById('navigation_wrap')
+      );
+    }
+    render(navData);
+  </script>
+</div>
+
+    <div class="mainContainer blogContainer postContainer">
+  <div id="main_wrap" class="wrapper mainWrapper">
+    <nav class="toc" id="doc_nav"></nav>
+<script>
+  var docnavData = [
+    
+    {
+      group     : "Quick Start",
+      items     : [
+        
+        
+        {
+          key : "/docs/quick-start/getting-started/",
+          title : "Getting Started",
+          url : "/docs/quick-start/getting-started/",
+        },
+        
+        
+        {
+          key : "/docs/editor/basics/",
+          title : "Basics",
+          url : "/docs/editor/basics/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "About",
+      items     : [
+        
+        
+        {
+          key : "/docs/editor/setup/",
+          title : "Setup",
+          url : "/docs/editor/setup/",
+        },
+        
+        
+        {
+          key : "/docs/editor/keyboard-shortcuts/",
+          title : "Keyboard Shortcuts",
+          url : "/docs/editor/keyboard-shortcuts/",
+        },
+        
+        
+        {
+          key : "/docs/editor/uninstall/",
+          title : "Uninstalling",
+          url : "/docs/editor/uninstall/",
+        },
+        
+        
+        {
+          key : "/docs/help/faq/",
+          title : "FAQ",
+          url : "/docs/help/faq/",
+        },
+        
+        
+        {
+          key : "/docs/help/troubleshooting/",
+          title : "Troubleshooting",
+          url : "/docs/help/troubleshooting/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Feature Guides",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/remote/",
+          title : "Remote Development",
+          url : "/docs/features/remote/",
+        },
+        
+        
+        {
+          key : "/docs/features/debugger/",
+          title : "Debugger",
+          url : "/docs/features/debugger/",
+        },
+        
+        
+        {
+          key : "/docs/features/task-runner/",
+          title : "Task Runner",
+          url : "/docs/features/task-runner/",
+        },
+        
+        
+        {
+          key : "/docs/features/quick-open/",
+          title : "Quick Open",
+          url : "/docs/features/quick-open/",
+        },
+        
+        
+        {
+          key : "/docs/features/working-sets/",
+          title : "Working Sets",
+          url : "/docs/features/working-sets/",
+        },
+        
+        
+        {
+          key : "/docs/features/outline-view/",
+          title : "Outline",
+          url : "/docs/features/outline-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/context-view/",
+          title : "Context View",
+          url : "/docs/features/context-view/",
+        },
+        
+        
+        {
+          key : "/docs/features/health-statistics/",
+          title : "Health Statistics",
+          url : "/docs/features/health-statistics/",
+        },
+        
+        
+        {
+          key : "/docs/features/terminal/",
+          title : "Integrated Terminal",
+          url : "/docs/features/terminal/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Plugins",
+      items     : [
+        
+        
+        {
+          key : "/docs/features/hg/",
+          title : "Mercurial Support",
+          url : "/docs/features/hg/",
+        },
+        
+        
+        {
+          key : "/docs/features/toolbar/",
+          title : "Toolbar",
+          url : "/docs/features/toolbar/",
+        },
+        
+        
+        {
+          key : "/docs/features/buck/",
+          title : "Buck",
+          url : "/docs/features/buck/",
+        },
+        
+        
+        {
+          key : "/docs/features/format-js/",
+          title : "Format JS",
+          url : "/docs/features/format-js/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Languages",
+      items     : [
+        
+        
+        {
+          key : "/docs/languages/hack/",
+          title : "Hack",
+          url : "/docs/languages/hack/",
+        },
+        
+        
+        {
+          key : "/docs/languages/flow/",
+          title : "Flow",
+          url : "/docs/languages/flow/",
+        },
+        
+        
+        {
+          key : "/docs/languages/objective-c/",
+          title : "Objective-C",
+          url : "/docs/languages/objective-c/",
+        },
+        
+        
+        {
+          key : "/docs/languages/cpp/",
+          title : "C++",
+          url : "/docs/languages/cpp/",
+        },
+        
+        
+        {
+          key : "/docs/languages/python/",
+          title : "Python",
+          url : "/docs/languages/python/",
+        },
+        
+        
+        {
+          key : "/docs/languages/swift/",
+          title : "Swift",
+          url : "/docs/languages/swift/",
+        },
+        
+        
+        {
+          key : "/docs/languages/graphql/",
+          title : "GraphQL",
+          url : "/docs/languages/graphql/",
+        },
+        
+        
+        {
+          key : "/docs/languages/other/",
+          title : "PHP, JS, OCaml",
+          url : "/docs/languages/other/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Platforms",
+      items     : [
+        
+        
+        {
+          key : "/docs/platforms/ios/",
+          title : "iOS",
+          url : "/docs/platforms/ios/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/android/",
+          title : "Android",
+          url : "/docs/platforms/android/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/react-native/",
+          title : "React Native",
+          url : "/docs/platforms/react-native/",
+        },
+        
+        
+        {
+          key : "/docs/platforms/web/",
+          title : "Web Development",
+          url : "/docs/platforms/web/",
+        }
+        
+      ],
+    },
+    
+    {
+      group     : "Advanced Topics",
+      items     : [
+        
+        
+        {
+          key : "/docs/advanced-topics/building-from-source/",
+          title : "Building Nuclide From Source",
+          url : "/docs/advanced-topics/building-from-source/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/custom-keybindings/",
+          title : "Custom Keybindings",
+          url : "/docs/advanced-topics/custom-keybindings/",
+        },
+        
+        
+        {
+          key : "/docs/advanced-topics/linter-package-compatibility/",
+          title : "Linter Package Compatibility",
+          url : "/docs/advanced-topics/linter-package-compatibility/",
+        }
+        
+      ],
+    },
+    
+  ];
+</script>
+<script type="text/javascript">
+  var DocNav = React.createClass({displayName: "DocNav",
+    getInitialState: function() {
+      return {
+        toggleActive: false,
+      };
+    },
+    getDefaultProps: function() {
+      return {
+        currentDoc: "FAQ",
+        currentGroup: "",
+        data: docnavData,
+      }
+    },
+    handleSlide: function(id) {
+      this.setState({
+        toggleActive: !this.state.toggleActive,
+      });
+    },
+    render: function() {
+      var classes = React.addons.classSet({
+        'navToggle': true,
+        'navToggleActive': this.state.toggleActive,
+      });
+      var navClasses = React.addons.classSet({
+        'toggleNav': true,
+        'toggleNavActive': this.state.toggleActive,
+      });
+      return (
+        React.createElement("div", {className: navClasses},
+          React.createElement("section", null,
+            this.props.data.map(this.renderNavGroups)
+          ),
+          React.createElement("div", {className: classes, onClick: this.handleSlide}, React.createElement("i", null, this.state.toggleActive ? "◤" : "◢"))
+        )
+      );
+    },
+    renderNavGroups: function(child, index) {
+      var classes = React.addons.classSet({
+        'navGroup': true,
+        'navGroupActive': this.props.currentGroup === child.group,
+      });
+      return (
+        React.createElement("div", {className: classes, key: index},
+          React.createElement("h3", null, child.group),
+          React.createElement("ul", null,
+            child.items.map(this.renderNavItems)
+          )
+        )
+      );
+    },
+    renderNavItems: function(child, index) {
+      var itemClasses = React.addons.classSet({
+        'navListItem': true,
+        'navListItemActive': this.props.currentDoc === child.title,
+      });
+      var classes = React.addons.classSet({
+        'navItem': true,
+        'navItemActive': this.props.currentDoc === child.title,
+      });
+      return (
+        React.createElement("li", {className: itemClasses, key: index}, React.createElement("a", {className: classes, href: child.url},  child.title))
+      );
+    },
+  });
+
+  function docNavRender(docnavData) {
+    React.render(
+      React.createElement(DocNav, {data: docnavData}),
+      document.getElementById('doc_nav')
+    );
+  }
+  docNavRender(docnavData);
+</script>
+
+    <div class="post">
+  <header class="post-header">
+    <h1 class="post-title">FAQ</h1>
+  </header>
+
+  <article class="post-content">
+   
+      <p>Here is an ever-growing list of frequently asked questions around Nuclide.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#how-do-i-open-nuclide" id="markdown-toc-how-do-i-open-nuclide">How do I open Nuclide?</a></li>
+  <li><a href="#what-version-of-nuclide-is-installed" id="markdown-toc-what-version-of-nuclide-is-installed">What version of Nuclide is installed?</a></li>
+  <li><a href="#how-do-i-migrate-from-a-pre-unified-package-version-of-nuclide" id="markdown-toc-how-do-i-migrate-from-a-pre-unified-package-version-of-nuclide">How do I migrate from a pre-unified package version of Nuclide?</a>    <ul>
+      <li><a href="#migrating-settings-from-previous-packages" id="markdown-toc-migrating-settings-from-previous-packages">Migrating settings from previous packages</a></li>
+    </ul>
+  </li>
+  <li><a href="#how-do-i-return-nuclide-to-a-known-state" id="markdown-toc-how-do-i-return-nuclide-to-a-known-state">How do I return Nuclide to a known state?</a></li>
+  <li><a href="#how-can-i-make-nuclide-like-my-favorite-editor" id="markdown-toc-how-can-i-make-nuclide-like-my-favorite-editor">How can I make Nuclide like my favorite editor?</a></li>
+  <li><a href="#can-i-write-a-script-to-automate-basic-atomnuclide-functionality" id="markdown-toc-can-i-write-a-script-to-automate-basic-atomnuclide-functionality">Can I write a script to automate basic Atom/Nuclide functionality?</a></li>
+  <li><a href="#can-the-nuclide-server-use-ports-other-than-9090-9093" id="markdown-toc-can-the-nuclide-server-use-ports-other-than-9090-9093">Can the Nuclide Server use ports other than 9090-9093?</a></li>
+  <li><a href="#can-i-print-from-nuclide" id="markdown-toc-can-i-print-from-nuclide">Can I print from Nuclide?</a></li>
+  <li><a href="#how-can-i-make-the-file-tree-always-automatically-scroll-to-the-current-active-file" id="markdown-toc-how-can-i-make-the-file-tree-always-automatically-scroll-to-the-current-active-file">How can I make the File Tree always automatically scroll to the current active file?</a></li>
+  <li><a href="#how-can-i-jump-to-the-last-cursor-position-in-a-file" id="markdown-toc-how-can-i-jump-to-the-last-cursor-position-in-a-file">How can I jump to the last cursor position in a file?</a></li>
+  <li><a href="#is-there-a-way-to-search-only-files-in-the-working-set" id="markdown-toc-is-there-a-way-to-search-only-files-in-the-working-set">Is there a way to search only files in the Working Set?</a></li>
+  <li><a href="#how-do-i-disable-most-recently-used-tab-switching" id="markdown-toc-how-do-i-disable-most-recently-used-tab-switching">How do I disable Most Recently Used tab switching?</a></li>
+  <li><a href="#can-nuclide-save-the-tabs-i-have-open-for-each-branchbookmark" id="markdown-toc-can-nuclide-save-the-tabs-i-have-open-for-each-branchbookmark">Can Nuclide save the tabs I have open for each branch/bookmark?</a></li>
+  <li><a href="#tabs-become-too-small-to-read-the-file-names-when-i-have-many-tabs-open" id="markdown-toc-tabs-become-too-small-to-read-the-file-names-when-i-have-many-tabs-open">Tabs become too small to read the file names when I have many tabs open.</a></li>
+  <li><a href="#how-do-i-report-bugs-request-features-or-ask-general-questions-about-how-to-use-nuclide" id="markdown-toc-how-do-i-report-bugs-request-features-or-ask-general-questions-about-how-to-use-nuclide">How do I report bugs, request features, or ask general questions about how to use Nuclide?</a></li>
+  <li><a href="#why-is-nuclide-a-single-atom-package" id="markdown-toc-why-is-nuclide-a-single-atom-package">Why is Nuclide a single Atom package?</a></li>
+</ul>
+
+<h2 id="how-do-i-open-nuclide">How do I open Nuclide?</h2>
+
+<p>After ensuring you have Nuclide <a href="/docs/editor/setup/">set up</a>, see the <a href="/docs/editor/basics/#opening">Opening</a> section in Nuclide <a href="/docs/editor/basics/">Basics</a> for instructions.</p>
+
+<h2 id="what-version-of-nuclide-is-installed">What version of Nuclide is installed?</h2>
+
+<p>You can determine the installed version of Nuclide with the <a href="https://github.com/atom/apm">Atom Package Manager</a> (APM) from the command-line.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>apm list --no-dev --installed
+</code></pre>
+</div>
+
+<p>The output will contain installed Atom packages and their versions.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>/Users/foobar/.atom/packages <span class="o">(</span>1<span class="o">)</span>
+└── nuclide@X.Y.Z
+</code></pre>
+</div>
+
+<p>Your installed version is the number following either the <code class="highlighter-rouge">nuclide</code> package or the first package
+starting with <code class="highlighter-rouge">nuclide-</code>. In the example above, the installed version is <code class="highlighter-rouge">X.Y.Z</code>.</p>
+
+<p class="nuclide"></p>
+
+<h2 id="how-do-i-migrate-from-a-pre-unified-package-version-of-nuclide">How do I migrate from a pre-unified package version of Nuclide?</h2>
+
+<p>If you previously installed Nuclide via the <code class="highlighter-rouge">nuclide-installer</code> package or by installing <code class="highlighter-rouge">nuclide-</code>
+packages individually, you should uninstall them first.</p>
+
+<p>The new <code class="highlighter-rouge">nuclide</code> package will automatically disable any deprecated <code class="highlighter-rouge">nuclide-*</code> packages and warn
+you on start up that you should uninstall them to ensure everything works as expected.</p>
+
+<p>Features you may have been familiar with as separate packages before, such as Hyperclick,
+Diagnostics, and File Tree, are now listed as features in Nuclide’s Settings page and are togglable
+as if they were Atom packages. If you want to use only one or a few of the features of Nuclide, you
+can disable the rest of Nuclide without incurring any load time for the disabled features’ code. All
+features are enabled by default.</p>
+
+<p><img src="/static/images/blog/nuclide-feature-settings.png" style="width:800px" /></p>
+
+<h3 id="migrating-settings-from-previous-packages">Migrating settings from previous packages</h3>
+
+<p>If you changed settings in any of Nuclide’s previous packages, the settings will be automatically
+migrated to their new location in the <code class="highlighter-rouge">nuclide.</code> namespace when you first launch Atom after
+installing the <code class="highlighter-rouge">nuclide</code> package. The settings will be configurable like before but under the
+Atom Settings rather than under the package’s name.</p>
+
+<h2 id="how-do-i-return-nuclide-to-a-known-state">How do I return Nuclide to a known state?</h2>
+
+<p>To reset Atom and Nuclide to factory settings, removing all your packages and settings, do the following:</p>
+
+<ol>
+  <li>Quit Atom.</li>
+  <li>Reinstall Atom.app.</li>
+  <li>
+    <p>Reset Atom’s settings (optional, but recommended).</p>
+
+    <blockquote>
+      <p>This will delay any custom settings and packages.</p>
+    </blockquote>
+
+    <p>On your machine, run:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> rm -rf ~/.atom
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Reset Atom’s cache (optional, but recommended).
+ On your machine, run:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  rm -rf ~/Library/Application\ Support/Atom
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Kill the Nuclide Server (if you have one).
+ If you are running the Nuclide Server on a remote machine, SSH into it and run:</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> pkill -f nuclide
+</code></pre>
+    </div>
+  </li>
+  <li>Reinstall Nuclide.</li>
+</ol>
+
+<h2 id="how-can-i-make-nuclide-like-my-favorite-editor">How can I make Nuclide like my favorite editor?</h2>
+
+<p>Because Nuclide is a package on top of Atom, it is infinitely configurable with a massive collection of open source packages.  If you want Atom to behave more like your favorite editor, try one of these:</p>
+
+<ul>
+  <li>Vim
+    <ul>
+      <li><a href="https://atom.io/packages/vim-mode-plus">vim-mode-plus</a></li>
+      <li><a href="https://atom.io/packages/ex-mode">ex-mode</a></li>
+    </ul>
+  </li>
+  <li>Emacs
+    <ul>
+      <li><a href="https://atom.io/packages/emacs-plus">emacs-plus</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="can-i-write-a-script-to-automate-basic-atomnuclide-functionality">Can I write a script to automate basic Atom/Nuclide functionality?</h2>
+
+<p>Atom provides a customizable <code class="highlighter-rouge">init.coffee</code> script that has full access to the Atom APIs and is executed at startup.  For more information, see <a href="http://flight-manual.atom.io/hacking-atom/sections/the-init-file/">Hacking Atom - The Init File</a>.</p>
+
+<p>You can access the <code class="highlighter-rouge">init.coffee</code> script by going to <code class="highlighter-rouge">Atom | Init Script...</code>.</p>
+
+<p>It’s easy to create your own commands with keybindings (you can also configure keybindings in a separate file, see <a href="http://flight-manual.atom.io/behind-atom/sections/keymaps-in-depth/">Keymaps In-Depth</a>).</p>
+
+<blockquote>
+  <p>You have to reload Atom to test your changes.</p>
+</blockquote>
+
+<h2 id="can-the-nuclide-server-use-ports-other-than-9090-9093">Can the Nuclide Server use ports other than 9090-9093?</h2>
+
+<p>With Nuclide’s default server configuration you may run into port number conflicts on your remote server.  To specify a specific port for the server to use, you can provide the <code class="highlighter-rouge">--port</code> option along with the remote server command.</p>
+
+<h2 id="can-i-print-from-nuclide">Can I print from Nuclide?</h2>
+
+<p>Unfortunately, this is not currently available as an option in Atom and doesn’t appear to be something they will be adding.  For more information, see <a href="https://discuss.atom.io/t/printing-support/760/45">https://discuss.atom.io/t/printing-support/760/45</a>.</p>
+
+<h2 id="how-can-i-make-the-file-tree-always-automatically-scroll-to-the-current-active-file">How can I make the File Tree always automatically scroll to the current active file?</h2>
+
+<ol>
+  <li>Open the <strong>Settings</strong> tab either by pressing <code class="highlighter-rouge">Cmd+,</code> (<code class="highlighter-rouge">Ctrl-,</code> on Linux) or by going to <code class="highlighter-rouge">Package | Settings View | Open</code>.</li>
+  <li>Select <strong>Packages</strong> from the list at the left, and search for <code class="highlighter-rouge">nuclide</code>.</li>
+  <li>Click on the <strong>Settings</strong> button for the <code class="highlighter-rouge">nuclide</code> package.</li>
+  <li>Scroll down until you find <code class="highlighter-rouge">nuclide-file-tree</code>.</li>
+  <li>Select the <strong>Reveal File on Switch</strong> checkbox.</li>
+</ol>
+
+<p><img src="/static/images/docs/help-faqs-reveal-file-on-switch.png" style="width:800px" /></p>
+
+<h2 id="how-can-i-jump-to-the-last-cursor-position-in-a-file">How can I jump to the last cursor position in a file?</h2>
+
+<p>Assume you performed an action that caused the cursor to jump to a new position.  How do you go back?</p>
+
+<p>Use the Nuclide Navigation Stack commands:</p>
+
+<ul>
+  <li>Forward navigation: <code class="highlighter-rouge">Ctrl-,</code> (<code class="highlighter-rouge">Ctrl-&lt;</code> on Linux and Windows)</li>
+  <li>Backward navigation: <code class="highlighter-rouge">Ctrl-.</code> (<code class="highlighter-rouge">Ctrl-&gt;</code> on Linux and Windows)</li>
+</ul>
+
+<h2 id="is-there-a-way-to-search-only-files-in-the-working-set">Is there a way to search only files in the Working Set?</h2>
+
+<p>Unfortunately, no.  The external search tools Nuclide uses are not aware of the Working Sets.  Nuclide also provides the external search tools with the upper limit on result set size preventing purely client-side filtering.</p>
+
+<h2 id="how-do-i-disable-most-recently-used-tab-switching">How do I disable Most Recently Used tab switching?</h2>
+
+<p>Atom 1.7.0 introduced Most Recently Used (MRU) tab switching.  To revert to the old behavior:</p>
+
+<ol>
+  <li>Go to <code class="highlighter-rouge">Atom | Keymap...</code>. This will open the <code class="highlighter-rouge">keympa.cson</code> file.</li>
+  <li>
+    <p>Add</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> 'body':
+   'ctrl-tab': 'pane:show-next-item'
+   'ctrl-tab ^ctrl': 'unset!'
+   'ctrl-shift-tab': 'pane:show-previous-item'
+   'ctrl-shift-tab ^ctrl': 'unset!'
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h2 id="can-nuclide-save-the-tabs-i-have-open-for-each-branchbookmark">Can Nuclide save the tabs I have open for each branch/bookmark?</h2>
+
+<p>Yes, Nuclide’s Bookshelf feature can save the tabs you have open for each branch/bookmark. When you switch between bookmarks, it will prompt you about restoring the files you had open.</p>
+
+<p>To control Bookshelf behavior:</p>
+
+<ol>
+  <li>Open the <strong>Settings</strong> tab either by pressing <code class="highlighter-rouge">Cmd+,</code> (<code class="highlighter-rouge">Ctrl-,</code> on Linux) or by going to <code class="highlighter-rouge">Package | Settings View | Open</code>.</li>
+  <li>Select <strong>Packages</strong> from the list at the left, and search for <code class="highlighter-rouge">nuclide</code>.</li>
+  <li>Click on the <strong>Settings</strong> button for the <code class="highlighter-rouge">nuclide</code> package.</li>
+  <li>Scroll down until you find <code class="highlighter-rouge">nuclide-bookshelf</code>.</li>
+  <li>Select <strong>Always Restore</strong>, <strong>Always Ignore</strong>, or <strong>Prompt to Restore</strong>.</li>
+</ol>
+
+<p><img src="/static/images/docs/help-faqs-bookshelf.png" style="width:800px" /></p>
+
+<h2 id="tabs-become-too-small-to-read-the-file-names-when-i-have-many-tabs-open">Tabs become too small to read the file names when I have many tabs open.</h2>
+
+<blockquote>
+  <p>This is an issue in Atom.</p>
+</blockquote>
+
+<p>One work-around is to make the tabs display in multiple rows.</p>
+
+<ol>
+  <li>Go to <code class="highlighter-rouge">Atom | Stylesheet...</code>. This will open the <code class="highlighter-rouge">styles.less</code> file.</li>
+  <li>
+    <p>Add</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> // Make tabs multi-row
+ .tab-bar {
+   height: auto;
+   flex-wrap: wrap;
+   .tab,
+   .tab.active {
+     flex: 1 0 auto;
+     height: 30px;
+     line-height: 27px;
+   }
+   .tab .title,
+   tab.active .title {
+     padding-right: 5px;
+     position: relative;
+     top: 1px;
+   }
+   .tab .close-icon,
+   .tab.active .close-icon {
+     line-height: 29px;
+   }
+ }
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h2 id="how-do-i-report-bugs-request-features-or-ask-general-questions-about-how-to-use-nuclide">How do I report bugs, request features, or ask general questions about how to use Nuclide?</h2>
+
+<p>If you’ve encountered a <em>bug</em>, please see the <a href="https://github.com/facebook/nuclide/issues">GitHub Issues page</a> to see if anyone else has encountered the same problem and to report it as an issue if it is new.</p>
+
+<p>If you have a <em>feature request</em> or <em>general question</em>, the <a href="https://www.facebook.com/groups/nuclide/">Nuclide Community</a> Facebook group is a good place to post.</p>
+
+<h2 id="why-is-nuclide-a-single-atom-package">Why is Nuclide a single Atom package?</h2>
+
+<p>The Atom ecosystem is centered around modular packages that can be installed and updated
+independently, and Nuclide took that same approach from the start. We wrote scripts to let our code
+live in a single repository but be released as many Atom packages. Nuclide releases were actually
+simultaneous releases of 40+ Atom packages. While this fit well with the Atom model, it meant we
+also had to distribute a “installer” package that oversaw the installation of top-level Atom
+packages.</p>
+
+<p>In practice, the installer process was computationally expensive, difficult to
+troubleshoot, and took roughly 40 minutes partially due to large amounts of network traffic. When
+all Nuclide packages were installed, they filled over 3GB of disk space. Nuclide packages are
+heavily interdependent, and because they were installed as top-level Atom packages they each had
+their own ‘node_modules’ directory with largely duplicate dependencies.</p>
+
+<p>By unifying Nuclide into a single Atom package, we aimed to improve installation, updates, and
+maintenance. The single ‘nuclide’ package does not require a special installer, only <code class="highlighter-rouge">apm install</code>
+like other Atom packages. This simplifies installation for everyone and makes Nuclide updates fast.
+Once installed, the ‘nuclide’ package takes under 110MB of disk space, a 95%+ reduction in disk use,
+and subsequently, network use during installation. The dramatic drop in disk use was possible
+because Nuclide’s features now share a single ‘node_modules’ directory and use relative paths to
+require one another, eliminating the duplicate dependencies present when Nuclide was 40+ top-level
+Atom packages.</p>
+
+<p>We hope that simplifying the installation
+process will make <a href="https://github.com/facebook/nuclide">Nuclide’s source</a> more familiar to other
+Atom developers and make it easier for anyone to contribute.</p>
+
+    
+  </article>
+  
+</div>
+
+
+  </div>
+</div>
+
+    <div class="footerContainer">
+  <div id="footer_wrap" class="wrapper footerWrapper">
+    <section id="fb_oss" class="fbOpenSourceFooter">
+      <a href="https://code.facebook.com/projects/" target="_blank"><img src="/static/oss_logo.png" alt="Facebook Open Source" title="Facebook Open Source" /></a>
+    </section>
+  </div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44373548-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="/js/jekyll-link-anchors.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+<script type="text/javascript" src="/js/docsearch.js"></script>
+<script type="text/javascript" src="/js/get-required-versions.js"></script>
+
+  </body>
+
+</html>
